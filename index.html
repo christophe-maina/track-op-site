@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Track-Op — le planning de fabrication d'atelier d'orthopédie</title>
+<meta name="description" content="Track-Op : le planning de fabrication pour atelier d'orthopédie. Écran mural, poste et mobile. Site en cours de développement — contactez-nous.">
+<meta property="og:title" content="Track-Op — le planning, clair d'un coup d'œil">
+<meta property="og:description" content="Le planning de fabrication pour atelier d'orthopédie : écran mural, poste et mobile. Bientôt en ligne.">
+<meta property="og:image" content="hero.png">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --txt:#eaf0ff; --muted:#9fb0da; --coral:#fb6f5f; --gold:#f5b73f;
+    --blue:#3f8cff; --teal:#2dd4bf;
+    --sans:'IBM Plex Sans',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:var(--sans); color:var(--txt); min-height:100vh;
+    background:radial-gradient(1200px 700px at 50% 0%, #3a6fd0 0%, #16307a 52%, #0a1748 100%);
+    display:flex; flex-direction:column; align-items:center; padding:34px 20px 24px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{width:100%; max-width:1040px; text-align:center}
+  /* logo */
+  .logo{display:inline-flex; align-items:center; gap:12px; margin-bottom:10px}
+  .logo .tv{width:40px; height:32px; border:2.5px solid var(--txt); border-radius:6px; display:flex; align-items:flex-end; gap:2.5px; padding:4px}
+  .logo .tv i{flex:1; border-radius:1px}
+  .logo .tv i:nth-child(1){height:42%;background:var(--blue)} .logo .tv i:nth-child(2){height:72%;background:var(--teal)}
+  .logo .tv i:nth-child(3){height:100%;background:var(--coral)} .logo .tv i:nth-child(4){height:58%;background:var(--gold)}
+  .logo .wm{font-size:34px; font-weight:700; letter-spacing:-1.5px} .logo .wm s{font-weight:900; color:var(--coral); text-decoration:none}
+  .logo .wm .pip{display:inline-block; width:7px; height:7px; border-radius:50%; background:#5fd49a; margin-left:4px; vertical-align:super}
+  .tagline{font-family:var(--mono); font-size:14px; color:var(--muted); letter-spacing:.04em; margin-bottom:18px}
+  .badge{display:inline-block; font-family:var(--mono); font-size:12px; font-weight:500; color:var(--gold);
+    border:1px solid rgba(245,183,63,.45); border-radius:30px; padding:6px 16px; margin-bottom:26px; letter-spacing:.05em}
+  .badge .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--gold);margin-right:7px;animation:pulse 1.6s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  .hero{width:100%; border-radius:18px; box-shadow:0 24px 60px rgba(0,0,0,.35); display:block}
+  h1{font-size:30px; font-weight:800; margin:30px 0 12px; letter-spacing:-.5px}
+  .pitch{font-size:17px; line-height:1.6; color:#d4ddf5; max-width:720px; margin:0 auto 6px}
+  .pitch b{color:#fff}
+  .surfaces{font-family:var(--mono); font-size:13px; color:var(--muted); margin:14px 0 30px}
+  .surfaces span{color:var(--coral)}
+  .cta{display:inline-flex; align-items:center; gap:10px; background:var(--coral); color:#fff; text-decoration:none;
+    font-size:17px; font-weight:700; padding:15px 32px; border-radius:14px; box-shadow:0 10px 26px rgba(251,111,95,.4); transition:transform .15s}
+  .cta:hover{transform:translateY(-2px)}
+  .mail{display:block; margin-top:14px; font-family:var(--mono); font-size:14px; color:var(--muted)}
+  .mail a{color:#cdd9f5}
+  footer{margin-top:46px; font-size:12px; color:#7e8cb8; line-height:1.7; max-width:760px}
+  footer .b{font-weight:700; color:var(--muted)}
+  @media(max-width:600px){ .logo .wm{font-size:28px} h1{font-size:23px} .pitch{font-size:15px} }
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="logo">
+      <div class="tv"><i></i><i></i><i></i><i></i></div>
+      <div class="wm">Track<s>Op</s><span class="pip"></span></div>
+    </div>
+    <div class="tagline">le planning, clair d'un coup d'œil</div>
+
+    <div class="badge"><span class="dot"></span>SITE EN DÉVELOPPEMENT · BIENTÔT EN LIGNE</div>
+
+    <img class="hero" src="hero.png" alt="Track-Op sur écran mural, ordinateur et mobile">
+
+    <h1>Le planning de fabrication de l'atelier d'orthopédie</h1>
+    <p class="pitch">
+      Suivez chaque appareillage <b>de la prise de mesure à la livraison</b> : saisie en temps réel,
+      traçabilité complète, charge d'équipe maîtrisée. Né de l'atelier, pour l'atelier.
+    </p>
+    <div class="surfaces">écran mural <span>·</span> poste informatique <span>·</span> mobile applicateur</div>
+
+    <a class="cta" href="mailto:contact@c-ter.fr?subject=Track-Op%20%E2%80%94%20demande%20d'information">✉ Nous contacter</a>
+    <span class="mail">ou écrivez à <a href="mailto:contact@c-ter.fr">contact@c-ter.fr</a></span>
+
+    <footer>
+      <span class="b">Track-Op™</span> — by C-Ter. © 2026 C-Ter.<br>
+      Éditeur : C-Ter — contact@c-ter.fr · Site en cours de construction.
+    </footer>
+
+  </div>
+</body>
+</html>
