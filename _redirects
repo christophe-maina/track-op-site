@@ -1,0 +1,4 @@
+# Cloudflare Pages / Netlify redirects
+# Force HTTPS + WWW → apex (track-op.fr canonical)
+
+https://www.track-op.fr/*  https://track-op.fr/:splat  301!

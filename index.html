@@ -3,85 +3,1030 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Track-Op — le planning de fabrication d'atelier d'orthopédie</title>
-<meta name="description" content="Track-Op : le planning de fabrication pour atelier d'orthopédie. Écran mural, poste et mobile. Site en cours de développement — contactez-nous.">
-<meta property="og:title" content="Track-Op — le planning, clair d'un coup d'œil">
-<meta property="og:description" content="Le planning de fabrication pour atelier d'orthopédie : écran mural, poste et mobile. Bientôt en ligne.">
-<meta property="og:image" content="hero.jpg">
+<title>Track-Op — Le planning clair, d'un coup d'œil</title>
+<meta name="description" content="Logiciel de planification pour ateliers d'orthopédie. Installation locale : vos données patients restent chez vous, pas de certification HDS requise.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+<!-- Open Graph / social -->
 <meta property="og:type" content="website">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta property="og:title" content="Track-Op — Le planning clair, d'un coup d'œil">
+<meta property="og:description" content="Logiciel de planification pour ateliers d'orthopédie. Installation locale, vos données patients restent chez vous.">
+<meta property="og:image" content="assets/ecosystem-real.jpg">
+<meta property="og:url" content="https://track-op.fr">
+<meta property="og:site_name" content="Track-Op">
+<meta property="og:locale" content="fr_FR">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Track-Op — Le planning clair, d'un coup d'œil">
+<meta name="twitter:description" content="Le planning d'atelier pour orthopédie. Vos données restent chez vous.">
+<meta name="twitter:image" content="assets/ecosystem-real.jpg">
+
+<!-- Marque déposée -->
+<meta name="author" content="C-Ter Studio">
+<meta name="copyright" content="© 2026 C-Ter Studio — Track-Op™ INPI N° 5260665">
+
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital@1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
 <style>
-  :root{
-    --txt:#eaf0ff; --muted:#9fb0da; --coral:#fb6f5f; --gold:#f5b73f;
-    --blue:#3f8cff; --teal:#2dd4bf;
-    --sans:'IBM Plex Sans',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{
-    font-family:var(--sans); color:var(--txt); min-height:100vh;
-    background:radial-gradient(1200px 700px at 50% 0%, #3a6fd0 0%, #16307a 52%, #0a1748 100%);
-    display:flex; flex-direction:column; align-items:center; padding:34px 20px 24px; -webkit-font-smoothing:antialiased;
-  }
-  .wrap{width:100%; max-width:1040px; text-align:center}
-  /* logo */
-  .logo{display:inline-flex; align-items:center; gap:12px; margin-bottom:10px}
-  .logo .tv{width:40px; height:32px; border:2.5px solid var(--txt); border-radius:6px; display:flex; align-items:flex-end; gap:2.5px; padding:4px}
-  .logo .tv i{flex:1; border-radius:1px}
-  .logo .tv i:nth-child(1){height:42%;background:var(--blue)} .logo .tv i:nth-child(2){height:72%;background:var(--teal)}
-  .logo .tv i:nth-child(3){height:100%;background:var(--coral)} .logo .tv i:nth-child(4){height:58%;background:var(--gold)}
-  .logo .wm{font-size:34px; font-weight:700; letter-spacing:-1.5px} .logo .wm s{font-weight:900; color:var(--coral); text-decoration:none}
-  .logo .wm .pip{display:inline-block; width:7px; height:7px; border-radius:50%; background:#5fd49a; margin-left:4px; vertical-align:super}
-  .tagline{font-family:var(--mono); font-size:14px; color:var(--muted); letter-spacing:.04em; margin-bottom:18px}
-  .badge{display:inline-block; font-family:var(--mono); font-size:12px; font-weight:500; color:var(--gold);
-    border:1px solid rgba(245,183,63,.45); border-radius:30px; padding:6px 16px; margin-bottom:26px; letter-spacing:.05em}
-  .badge .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--gold);margin-right:7px;animation:pulse 1.6s infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-  .hero{width:100%; border-radius:18px; box-shadow:0 24px 60px rgba(0,0,0,.35); display:block}
-  h1{font-size:30px; font-weight:800; margin:30px 0 12px; letter-spacing:-.5px}
-  .pitch{font-size:17px; line-height:1.6; color:#d4ddf5; max-width:720px; margin:0 auto 6px}
-  .pitch b{color:#fff}
-  .surfaces{font-family:var(--mono); font-size:13px; color:var(--muted); margin:14px 0 30px}
-  .surfaces span{color:var(--coral)}
-  .cta{display:inline-flex; align-items:center; gap:10px; background:var(--coral); color:#fff; text-decoration:none;
-    font-size:17px; font-weight:700; padding:15px 32px; border-radius:14px; box-shadow:0 10px 26px rgba(251,111,95,.4); transition:transform .15s}
-  .cta:hover{transform:translateY(-2px)}
-  .mail{display:block; margin-top:14px; font-family:var(--mono); font-size:14px; color:var(--muted)}
-  .mail a{color:#cdd9f5}
-  footer{margin-top:46px; font-size:12px; color:#7e8cb8; line-height:1.7; max-width:760px}
-  footer .b{font-weight:700; color:var(--muted)}
-  @media(max-width:600px){ .logo .wm{font-size:28px} h1{font-size:23px} .pitch{font-size:15px} }
+:root{
+  /* — Bleus Track-Op (UI logiciel) — */
+  --bg:           #0F1F47;
+  --bg-elev-1:   #15295A;
+  --bg-elev-2:   #1B3471;
+  --bg-elev-3:   #234190;
+  --blue-ui:      #1E40AF;   /* le bleu du planning */
+  --blue-bright:  #5A9BD8;
+  --line:         rgba(242, 234, 217, 0.08);
+  --line-strong:  rgba(242, 234, 217, 0.14);
+
+  /* — Texte — */
+  --text:         #F2EAD9;
+  --text-soft:    #B8BDC9;
+  --text-mute:    #6B7180;
+
+  /* — Accents Track-Op — */
+  --orange:       #E26847;
+  --orange-soft:  #C8553D;
+  --jaune:        #F5C84A;
+  --vert:         #5B8C4F;
+
+  /* — Glow — */
+  --glow-orange:  rgba(226, 104, 71, 0.35);
+  --glow-blue:    rgba(74, 135, 189, 0.25);
+  --glow-jaune:   rgba(245, 200, 74, 0.22);
+
+  --font-display: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-serif:   'IBM Plex Serif', Georgia, serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-display);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* — GRAIN — */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:1;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/></svg>");
+  opacity:0.04;mix-blend-mode:overlay;
+}
+
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+img{max-width:100%;display:block;}
+
+/* ════ NAV ════ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:18px 32px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(10,18,36,0.72);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--line);
+  transition:padding .25s;
+}
+.nav.scrolled{padding:14px 32px;}
+.nav-logo{display:flex;align-items:center;gap:12px;font-size:19px;font-weight:700;letter-spacing:-0.02em;color:var(--text);}
+.nav-logo svg{flex-shrink:0;}
+.nav-logo .op{color:var(--orange);}
+.nav-links{display:flex;gap:32px;}
+.nav-links a{
+  font-family:var(--font-mono);font-size:12px;letter-spacing:0.06em;
+  color:var(--text-soft);transition:color .2s;
+}
+.nav-links a:hover{color:var(--text);}
+.nav-cta{
+  font-family:var(--font-mono);font-size:12px;letter-spacing:0.06em;font-weight:500;
+  padding:10px 18px;border:1px solid var(--line-strong);border-radius:6px;
+  background:rgba(242,234,217,0.04);color:var(--text);transition:all .2s;
+}
+.nav-cta:hover{background:var(--orange);border-color:var(--orange);box-shadow:0 0 20px var(--glow-orange);}
+.nav-progress{position:absolute;bottom:0;left:0;height:2px;background:var(--orange);width:0%;transition:width .1s;}
+
+@media(max-width:768px){
+  .nav{padding:14px 20px;}
+  .nav-links{display:none;}
+}
+
+/* ════ HERO ════ */
+.hero{
+  position:relative;
+  padding:160px 32px 80px;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 50% at 80% 10%, var(--glow-blue) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 40% at 10% 90%, var(--glow-orange) 0%, transparent 55%);
+  opacity:.6;
+}
+.hero::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(circle, var(--line-strong) 1px, transparent 1px);
+  background-size:32px 32px;
+  mask:radial-gradient(ellipse 70% 80% at 50% 40%, black 30%, transparent 80%);
+  -webkit-mask:radial-gradient(ellipse 70% 80% at 50% 40%, black 30%, transparent 80%);
+  opacity:.5;
+}
+.hero-inner{max-width:1280px;margin:0 auto;position:relative;z-index:2;}
+
+.hero-tag{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:6px 14px;border:1px solid var(--line-strong);border-radius:100px;
+  font-family:var(--font-mono);font-size:11px;letter-spacing:0.1em;
+  color:var(--text-soft);
+  margin-bottom:32px;
+  background:rgba(242,234,217,0.03);
+}
+.hero-tag .pulse{
+  width:7px;height:7px;border-radius:50%;background:var(--vert);
+  box-shadow:0 0 0 0 var(--vert);animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(91,140,79,0.6);}
+  70%{box-shadow:0 0 0 10px rgba(91,140,79,0);}
+  100%{box-shadow:0 0 0 0 rgba(91,140,79,0);}
+}
+
+.hero h1{
+  font-size:clamp(48px, 8vw, 104px);
+  font-weight:700;
+  line-height:0.98;
+  letter-spacing:-0.04em;
+  margin-bottom:32px;
+  max-width:1000px;
+}
+.hero h1 .accent{
+  font-family:var(--font-serif);
+  font-style:italic;
+  font-weight:400;
+  color:var(--orange);
+}
+
+.hero-sub{
+  font-size:clamp(17px, 1.6vw, 21px);
+  line-height:1.6;
+  color:var(--text-soft);
+  max-width:680px;
+  margin-bottom:48px;
+}
+
+.hero-cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:80px;}
+
+.btn{
+  font-family:var(--font-display);font-size:15px;font-weight:500;
+  padding:14px 26px;border-radius:8px;transition:all .2s;
+  display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+}
+.btn-primary{
+  background:var(--orange);color:white;border:1px solid var(--orange);
+  box-shadow:0 0 0 0 var(--glow-orange);
+}
+.btn-primary:hover{box-shadow:0 0 30px var(--glow-orange);transform:translateY(-1px);}
+.btn-primary .arrow{transition:transform .2s;}
+.btn-primary:hover .arrow{transform:translateX(4px);}
+
+.btn-ghost{
+  background:rgba(242,234,217,0.04);color:var(--text);
+  border:1px solid var(--line-strong);
+}
+.btn-ghost:hover{background:rgba(242,234,217,0.08);}
+
+.hero-visual{
+  position:relative;
+  border-radius:14px;overflow:hidden;
+  border:1px solid var(--line-strong);
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.5),
+    0 0 1px var(--line-strong) inset,
+    0 0 80px var(--glow-blue);
+}
+.hero-visual img{width:100%;display:block;}
+.hero-visual::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg, transparent 60%, rgba(10,18,36,0.6) 100%);
+}
+
+.trust-strip{
+  margin-top:72px;
+  padding-top:32px;
+  border-top:1px solid var(--line);
+  display:flex;flex-wrap:wrap;align-items:center;gap:48px;
+  font-family:var(--font-mono);font-size:11px;letter-spacing:0.1em;
+  color:var(--text-mute);
+  text-transform:uppercase;
+}
+.trust-strip strong{color:var(--text-soft);font-weight:500;}
+
+/* ════ PROMISE — clé ════ */
+.promise{
+  padding:140px 32px;
+  position:relative;
+  background:var(--bg-elev-1);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.promise::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 60% 80% at 50% 50%, var(--glow-blue) 0%, transparent 60%);
+  opacity:.4;
+}
+.promise-inner{
+  max-width:1100px;margin:0 auto;position:relative;z-index:2;
+  text-align:center;
+}
+.promise .quote-mark{
+  font-family:var(--font-serif);font-style:italic;
+  font-size:120px;line-height:.5;color:var(--orange);
+  margin-bottom:24px;display:block;
+}
+.promise blockquote{
+  font-size:clamp(28px, 4vw, 48px);
+  font-weight:500;line-height:1.2;letter-spacing:-0.02em;
+  margin-bottom:32px;
+}
+.promise blockquote em{
+  font-family:var(--font-serif);font-style:italic;font-weight:400;color:var(--orange);
+}
+.promise .cite{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:0.18em;color:var(--text-mute);
+  text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:14px;
+}
+.promise .cite::before,.promise .cite::after{
+  content:'';width:32px;height:1px;background:var(--line-strong);
+}
+
+/* ════ SECTION COMMON ════ */
+.section{padding:120px 32px;position:relative;}
+.section-inner{max-width:1280px;margin:0 auto;position:relative;z-index:2;}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--font-mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--orange);
+  margin-bottom:20px;
+}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--orange);}
+
+.section-title{
+  font-size:clamp(36px, 5vw, 64px);font-weight:700;letter-spacing:-0.03em;line-height:1.05;
+  margin-bottom:24px;max-width:900px;
+}
+.section-title .accent{font-family:var(--font-serif);font-style:italic;font-weight:400;color:var(--orange);}
+.section-sub{font-size:18px;color:var(--text-soft);max-width:700px;line-height:1.65;}
+
+/* ════ CAROUSEL ════ */
+.carousel{margin-top:72px;}
+.carousel-frame{
+  position:relative;border-radius:20px;overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:var(--bg-elev-1);
+  box-shadow:0 30px 80px rgba(0,0,0,0.5), 0 0 60px var(--glow-blue);
+}
+.carousel-track{display:flex;transition:transform .6s cubic-bezier(0.65, 0, 0.35, 1);will-change:transform;}
+.carousel-slide{flex:0 0 100%;display:flex;align-items:center;justify-content:center;aspect-ratio:4/3;background:#0E1B3D;overflow:hidden;}
+.carousel-slide img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;}
+.carousel-meta{
+  padding:32px 40px;
+  display:flex;align-items:flex-end;justify-content:space-between;gap:32px;
+  border-top:1px solid var(--line);background:var(--bg-elev-1);
+}
+.carousel-meta-left .label{font-family:var(--font-mono);font-size:11px;letter-spacing:0.18em;color:var(--orange);text-transform:uppercase;margin-bottom:8px;}
+.carousel-meta-left h3{font-size:28px;font-weight:600;letter-spacing:-0.02em;margin-bottom:8px;}
+.carousel-meta-left p{font-size:15px;color:var(--text-soft);max-width:520px;}
+.carousel-controls{display:flex;align-items:center;gap:16px;}
+.carousel-dots{display:flex;gap:8px;}
+.carousel-dots button{width:8px;height:8px;border-radius:50%;background:var(--line-strong);transition:all .2s;}
+.carousel-dots button.active{width:28px;border-radius:4px;background:var(--orange);}
+.carousel-arrow{
+  width:40px;height:40px;border-radius:50%;
+  border:1px solid var(--line-strong);background:var(--bg-elev-2);
+  display:flex;align-items:center;justify-content:center;transition:all .2s;
+}
+.carousel-arrow:hover{background:var(--orange);border-color:var(--orange);}
+
+/* ════ COMMENT ÇA MARCHE — bento ════ */
+.how{}
+.how-grid{
+  display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:minmax(220px,auto);gap:16px;
+  margin-top:72px;
+}
+.how-card{
+  position:relative;background:var(--bg-elev-1);
+  border:1px solid var(--line);border-radius:16px;padding:32px;
+  overflow:hidden;transition:all .3s;display:flex;flex-direction:column;
+}
+.how-card:hover{border-color:var(--line-strong);background:var(--bg-elev-2);transform:translateY(-2px);}
+.how-card .ico{
+  width:44px;height:44px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(226,104,71,0.12);color:var(--orange);margin-bottom:20px;
+}
+.how-card h3{font-size:22px;font-weight:600;letter-spacing:-0.015em;margin-bottom:12px;}
+.how-card p{font-size:14.5px;color:var(--text-soft);line-height:1.65;}
+.how-card strong{color:var(--text);font-weight:500;}
+
+.how-large{grid-column:span 3;grid-row:span 2;background:linear-gradient(135deg, var(--bg-elev-1) 0%, var(--bg-elev-2) 100%);position:relative;}
+.how-large::after{content:'';position:absolute;right:-100px;bottom:-100px;width:400px;height:400px;background:radial-gradient(circle, var(--glow-orange) 0%, transparent 70%);opacity:.35;pointer-events:none;}
+.how-large h3{font-size:32px;max-width:380px;}
+.how-large p{font-size:16px;max-width:420px;}
+.how-medium{grid-column:span 3;}
+.how-small{grid-column:span 2;}
+.how-wide{grid-column:span 4;}
+
+.how-large .pillar{
+  margin-top:auto;display:flex;align-items:center;gap:14px;
+  padding:14px 18px;
+  background:rgba(226,104,71,0.1);border:1px solid var(--orange);border-radius:10px;
+}
+.how-large .pillar .pillar-ico{color:var(--orange);}
+.how-large .pillar p{font-size:13px;color:var(--text);margin:0;line-height:1.45;}
+
+@media(max-width:1024px){
+  .how-grid{grid-template-columns:repeat(4,1fr);}
+  .how-large{grid-column:span 4;grid-row:span 1;}
+  .how-medium{grid-column:span 2;}
+  .how-small{grid-column:span 2;}
+  .how-wide{grid-column:span 4;}
+}
+@media(max-width:640px){
+  .how-grid{grid-template-columns:1fr;}
+  .how-large,.how-medium,.how-small,.how-wide{grid-column:span 1;grid-row:span 1;}
+}
+
+/* ════ RÔLES ════ */
+.roles-section{
+  background:var(--bg-elev-1);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.roles-grid{
+  margin-top:72px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+}
+.role{
+  background:var(--bg);border:1px solid var(--line);border-radius:16px;
+  padding:36px;
+  display:flex;flex-direction:column;
+  position:relative;
+  transition:all .25s;
+}
+.role:hover{border-color:var(--line-strong);transform:translateY(-3px);}
+.role-num{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:0.18em;color:var(--orange);
+  margin-bottom:16px;text-transform:uppercase;
+}
+.role h3{font-size:24px;font-weight:600;letter-spacing:-0.02em;margin-bottom:12px;}
+.role p{font-size:14.5px;color:var(--text-soft);line-height:1.65;}
+.role .tag{
+  align-self:flex-start;margin-top:24px;
+  font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;
+  padding:5px 10px;border:1px solid var(--line-strong);border-radius:4px;color:var(--text-soft);
+}
+.role.r2 .role-num{color:var(--jaune);}
+.role.r3 .role-num{color:var(--vert);}
+.role-arrow{
+  position:absolute;right:-20px;top:50%;transform:translateY(-50%);
+  width:32px;height:32px;border-radius:50%;
+  background:var(--bg);border:1px solid var(--line-strong);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text-soft);z-index:2;
+}
+
+@media(max-width:900px){
+  .roles-grid{grid-template-columns:1fr;}
+  .role-arrow{display:none;}
+}
+
+/* ════ DATA STAY ════ */
+.data-stay{position:relative;}
+
+.data-stay-grid{
+  margin-top:72px;
+  display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:center;
+}
+.data-stay-text h2{font-size:clamp(36px, 5vw, 56px);font-weight:700;letter-spacing:-0.03em;line-height:1.05;margin-bottom:24px;}
+.data-stay-text h2 em{font-family:var(--font-serif);font-style:italic;font-weight:400;color:var(--orange);}
+.data-stay-text p{font-size:16.5px;line-height:1.7;color:var(--text-soft);margin-bottom:18px;}
+.data-stay-text p:last-child{margin-bottom:0;}
+.data-stay-text strong{color:var(--text);font-weight:500;}
+
+.data-visual{
+  background:var(--bg-elev-1);border:1px solid var(--line);border-radius:16px;
+  padding:36px;
+  position:relative;overflow:hidden;
+}
+.data-visual::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 0%, var(--glow-blue) 0%, transparent 60%);
+  opacity:.4;pointer-events:none;
+}
+.data-visual h4{font-family:var(--font-mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-mute);margin-bottom:24px;}
+
+.data-list{display:flex;flex-direction:column;gap:14px;position:relative;z-index:2;}
+.data-item{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:14px 18px;background:rgba(242,234,217,0.03);border:1px solid var(--line);border-radius:8px;
+}
+.data-item .check{
+  width:22px;height:22px;flex-shrink:0;
+  background:var(--vert);border-radius:50%;color:white;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;
+}
+.data-item .text{font-size:14.5px;line-height:1.5;}
+.data-item .text strong{display:block;color:var(--text);font-weight:500;margin-bottom:2px;}
+.data-item .text span{color:var(--text-soft);}
+
+@media(max-width:900px){
+  .data-stay-grid{grid-template-columns:1fr;}
+}
+
+/* ════ PREREQUIS ════ */
+.prereq{background:var(--bg-elev-1);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.prereq-grid{
+  margin-top:72px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+}
+.prereq-card{
+  background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:28px;
+  transition:all .25s;display:flex;flex-direction:column;
+}
+.prereq-card:hover{border-color:var(--line-strong);}
+.prereq-card .ico{
+  width:40px;height:40px;border-radius:8px;
+  background:rgba(74,135,189,0.12);color:var(--blue-bright);
+  display:flex;align-items:center;justify-content:center;margin-bottom:16px;
+}
+.prereq-card h4{font-size:17px;font-weight:600;letter-spacing:-0.01em;margin-bottom:8px;}
+.prereq-card p{font-size:13.5px;color:var(--text-soft);line-height:1.6;}
+.prereq-card .spec{
+  font-family:var(--font-mono);font-size:11px;color:var(--orange);
+  margin-top:14px;padding-top:14px;border-top:1px solid var(--line);
+  letter-spacing:0.04em;
+}
+
+@media(max-width:900px){
+  .prereq-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:580px){
+  .prereq-grid{grid-template-columns:1fr;}
+}
+
+/* ════ C-TER TAKES CARE ════ */
+.cter-care-list{
+  margin-top:60px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+}
+.cter-item{
+  padding:24px;
+  border:1px solid var(--line);border-radius:12px;
+  background:var(--bg-elev-1);
+  transition:all .25s;
+  display:flex;flex-direction:column;gap:8px;
+}
+.cter-item:hover{border-color:var(--orange);box-shadow:0 0 30px var(--glow-orange);}
+.cter-item .lbl{
+  font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--orange);
+}
+.cter-item .name{font-size:17px;font-weight:600;letter-spacing:-0.01em;}
+.cter-item p{font-size:13.5px;color:var(--text-soft);line-height:1.55;}
+
+@media(max-width:768px){.cter-care-list{grid-template-columns:1fr;}}
+
+/* ════ CTA FINAL ════ */
+.cta-final{padding:140px 32px;text-align:center;position:relative;overflow:hidden;}
+.cta-final::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 60% 80% at 50% 50%, var(--glow-orange) 0%, transparent 60%);
+  opacity:.45;
+}
+.cta-final-inner{max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.cta-final h2{font-size:clamp(40px, 6vw, 80px);font-weight:700;letter-spacing:-0.03em;line-height:1.05;margin-bottom:24px;}
+.cta-final h2 .accent{font-family:var(--font-serif);font-style:italic;font-weight:400;color:var(--orange);}
+.cta-final p{font-size:18px;color:var(--text-soft);line-height:1.6;margin-bottom:40px;}
+
+/* ════ FOOTER ════ */
+footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--bg-elev-1);}
+.footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;}
+.footer-brand{display:flex;flex-direction:column;gap:14px;}
+.footer-logo{display:flex;align-items:center;gap:12px;font-size:22px;font-weight:700;letter-spacing:-0.02em;color:var(--text);}
+.footer-logo svg{flex-shrink:0;}
+.footer-logo .op{color:var(--orange);}
+.footer-brand .tagline{font-family:var(--font-serif);font-style:italic;color:var(--text-soft);font-size:14px;}
+.footer-brand .meta{font-size:13px;color:var(--text-mute);line-height:1.6;margin-top:8px;}
+.footer-col h4{font-family:var(--font-mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-soft);margin-bottom:16px;font-weight:500;}
+.footer-col a{display:block;font-size:13px;color:var(--text-mute);margin-bottom:10px;transition:color .2s;}
+.footer-col a:hover{color:var(--orange);}
+
+.footer-bottom{
+  max-width:1280px;margin:48px auto 0;padding-top:24px;
+  border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
+  font-family:var(--font-mono);font-size:11px;color:var(--text-mute);letter-spacing:0.06em;
+}
+.footer-bottom .marker{color:var(--vert);}
+
+@media(max-width:768px){
+  .footer-inner{grid-template-columns:1fr;}
+  .section{padding:80px 24px;}
+  .hero{padding:120px 24px 60px;}
+  .promise{padding:100px 24px;}
+}
+
+/* ════ REVEAL ════ */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(0.22, 1, 0.36, 1), transform .8s cubic-bezier(0.22, 1, 0.36, 1);}
+.reveal.in{opacity:1;transform:translateY(0);}
+.reveal.d1{transition-delay:.1s;}
+.reveal.d2{transition-delay:.2s;}
+.reveal.d3{transition-delay:.3s;}
 </style>
 </head>
 <body>
-  <div class="wrap">
 
-    <div class="logo">
-      <div class="tv"><i></i><i></i><i></i><i></i></div>
-      <div class="wm">Track<s>Op</s><span class="pip"></span></div>
-    </div>
-    <div class="tagline">le planning, clair d'un coup d'œil</div>
-
-    <div class="badge"><span class="dot"></span>SITE EN DÉVELOPPEMENT · BIENTÔT EN LIGNE</div>
-
-    <img class="hero" src="hero.jpg" alt="Track-Op sur écran mural, ordinateur et mobile">
-
-    <h1>Le planning de fabrication de l'atelier d'orthopédie</h1>
-    <p class="pitch">
-      Suivez chaque appareillage <b>de la prise de mesure à la livraison</b> : saisie en temps réel,
-      traçabilité complète, charge d'équipe maîtrisée. Né de l'atelier, pour l'atelier.
-    </p>
-    <div class="surfaces">écran mural <span>·</span> poste informatique <span>·</span> mobile applicateur</div>
-
-    <a class="cta" href="mailto:contact@c-ter.fr?subject=Track-Op%20%E2%80%94%20demande%20d'information">✉ Nous contacter</a>
-    <span class="mail">ou écrivez à <a href="mailto:contact@c-ter.fr">contact@c-ter.fr</a></span>
-
-    <footer>
-      <span class="b">Track-Op™</span> — by C-Ter. © 2026 C-Ter.<br>
-      Éditeur : C-Ter — contact@c-ter.fr · Site en cours de construction.
-    </footer>
-
+<!-- ════ NAV ════ -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav-logo" aria-label="Track-Op">
+    <svg width="42" height="30" viewBox="0 0 70 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="3" y="6" width="56" height="38" rx="3" fill="#0F1F47" stroke="#F2EAD9" stroke-width="2.5"/>
+      <rect x="9" y="12" width="16" height="4" fill="#5A9BD8"/>
+      <rect x="27" y="12" width="6" height="4" fill="#5B8C4F"/>
+      <rect x="9" y="19" width="10" height="4" fill="#E26847"/>
+      <rect x="21" y="19" width="26" height="4" fill="#F5C84A"/>
+      <rect x="9" y="26" width="34" height="4" fill="#5B8C4F" fill-opacity="0.7"/>
+      <rect x="45" y="26" width="4" height="4" fill="#E26847"/>
+      <rect x="9" y="33" width="20" height="4" fill="#5A9BD8" fill-opacity="0.55"/>
+      <path d="M19 44 L17 50 M43 44 L45 50" stroke="#F2EAD9" stroke-width="2.2" stroke-linecap="round"/>
+      <g transform="translate(52 30) rotate(18)">
+        <rect x="0" y="0" width="13" height="27" rx="2" fill="#F2EAD9"/>
+        <circle cx="6.5" cy="7" r="3.4" fill="#E26847"/>
+      </g>
+    </svg>
+    <span>Track<span class="op">Op</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="#demo">Démo</a>
+    <a href="#how">Comment ça marche</a>
+    <a href="#data">Vos données</a>
+    <a href="#prereq">Prérequis</a>
   </div>
+  <a href="mailto:contact@c-ter.fr?subject=Demande%20de%20d%C3%A9mo%20Track-Op" class="nav-cta">Demander une démo →</a>
+  <div class="nav-progress" id="navProgress"></div>
+</nav>
+
+<!-- ════ HERO ════ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag reveal">
+      <span class="pulse"></span>
+      EN FONCTION CHEZ OE3D GUYANE
+    </div>
+    <h1 class="reveal d1">
+      Le planning <span class="accent">clair,</span><br>
+      d'un coup d'œil.
+    </h1>
+    <p class="hero-sub reveal d2">
+      Track-Op s'installe dans votre atelier, et <strong style="color:var(--text)">vos données patients restent chez vous</strong>. Le logiciel de planification temps réel pour ateliers d'orthopédie, d'orthoprothèse et de podo-orthèse.
+    </p>
+    <div class="hero-cta-row reveal d3">
+      <a href="mailto:contact@c-ter.fr?subject=Demande%20de%20d%C3%A9mo%20Track-Op" class="btn btn-primary">
+        Demander une démo
+        <span class="arrow">→</span>
+      </a>
+      <a href="#demo" class="btn btn-ghost">Voir le produit</a>
+    </div>
+
+    <div class="hero-visual reveal">
+      <img src="assets/ecosystem-real.jpg" alt="Track-Op : écran mural, poste de travail, mobile">
+    </div>
+
+    <div class="trust-strip reveal">
+      <span><strong>Installation locale</strong> · pas de cloud tiers</span>
+      <span><strong>Marque INPI</strong> N° 5260665</span>
+      <span><strong>Pas de HDS requis</strong></span>
+      <span><strong>by C-Ter</strong> · Guyane</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════ PROMISE ════ -->
+<section class="promise">
+  <div class="promise-inner">
+    <span class="quote-mark reveal">"</span>
+    <blockquote class="reveal d1">
+      Track-Op s'installe dans votre atelier,<br>
+      et vos données patients <em>restent chez vous.</em>
+    </blockquote>
+    <div class="cite reveal d2">L'idée en une phrase</div>
+  </div>
+</section>
+
+<!-- ════ DEMO CAROUSEL ════ -->
+<section class="section" id="demo">
+  <div class="section-inner">
+    <div class="eyebrow reveal">01 — Le produit</div>
+    <h2 class="section-title reveal d1">
+      Trois vues, <span class="accent">une vérité.</span>
+    </h2>
+    <p class="section-sub reveal d2">
+      Track-Op ajoute une couche de visibilité par-dessus vos habitudes : la vue d'ensemble du flux et la gestion des fabrications. On voit où en est chaque appareil, qui fait quoi, ce qui est urgent — sans rien bouleverser dans l'atelier.
+    </p>
+
+    <div class="carousel reveal" id="carousel">
+      <div class="carousel-frame">
+        <div class="carousel-track" id="carouselTrack">
+          <div class="carousel-slide"><img src="assets/carousel-1.png" alt="Écran mural Track-Op"></div>
+          <div class="carousel-slide"><img src="assets/carousel-2.png" alt="Poste de travail Track-Op"></div>
+          <div class="carousel-slide"><img src="assets/carousel-3.png" alt="App mobile Track-Op"></div>
+        </div>
+        <div class="carousel-meta">
+          <div class="carousel-meta-left">
+            <div class="label" id="slideLabel">01 — L'écran mural</div>
+            <h3 id="slideTitle">L'atelier en un coup d'œil</h3>
+            <p id="slideDesc">Une télévision grand format affiche le planning de fabrication en temps réel. Coloré, lisible à distance, mis à jour sans intervention. Toute l'équipe voit où en est chaque appareil.</p>
+          </div>
+          <div class="carousel-controls">
+            <div class="carousel-dots" id="carouselDots">
+              <button class="active" data-slide="0" aria-label="Slide 1"></button>
+              <button data-slide="1" aria-label="Slide 2"></button>
+              <button data-slide="2" aria-label="Slide 3"></button>
+            </div>
+            <button class="carousel-arrow" id="arrowPrev" aria-label="Précédent">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </button>
+            <button class="carousel-arrow" id="arrowNext" aria-label="Suivant">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ COMMENT ÇA MARCHE — bento ════ -->
+<section class="section how" id="how">
+  <div class="section-inner">
+    <div class="eyebrow reveal">02 — Comment ça marche</div>
+    <h2 class="section-title reveal d1">
+      Une couche <span class="accent">par-dessus</span> votre atelier.
+    </h2>
+    <p class="section-sub reveal d2">
+      Track-Op ne remplace pas votre fiche d'appareillage et ne touche pas au travail de l'établi. Il ajoute la visibilité qui manquait — sans rien bouleverser.
+    </p>
+
+    <div class="how-grid reveal">
+      <!-- LARGE : data stay home -->
+      <div class="how-card how-large">
+        <div class="ico">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3>Vos données ne sortent pas de l'atelier</h3>
+        <p>Elles vivent sur votre matériel, chez vous. Vous en êtes le seul maître. Pas de cloud tiers, pas de transmission silencieuse, pas de dépendance.</p>
+        <div class="pillar">
+          <div class="pillar-ico">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <p><strong style="color:var(--text)">Pas de certification HDS requise</strong> — vous hébergez vos propres données (art. L.1111-8 CSP).</p>
+        </div>
+      </div>
+
+      <!-- 3 : flux 8 étapes -->
+      <div class="how-card how-medium">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg></div>
+        <h3>Flux de fabrication piloté</h3>
+        <p>Mesure, rectification, prêt thermo, thermoformage, mise à l'essayage, essayage, fabrication définitive, livraison. <strong>Chaque appareil suivi sur tout son cycle.</strong></p>
+      </div>
+
+      <!-- 4 : charge en direct -->
+      <div class="how-card how-medium">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 21H4.6c-.6 0-.6 0-.6-.6V3M7 14l4-4 4 4 5-5"/></svg></div>
+        <h3>Charge en temps réel par technicien</h3>
+        <p>Le responsable des fabrications dispatche d'un coup d'œil, sans surcharger personne. La capacité de rectification est calculée à partir du <strong>volume d'heures que chaque applicateur concède à l'atelier.</strong></p>
+      </div>
+
+      <!-- small left : personnalisable -->
+      <div class="how-card how-small">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
+        <h3>Personnalisable</h3>
+        <p>Liste d'appareils, étapes, temps par défaut, intervenants. Le responsable règle tout, sans informaticien.</p>
+      </div>
+
+      <!-- wide right : c-ter installe -->
+      <div class="how-card how-wide">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+        <h3>C-Ter installe, configure et accompagne</h3>
+        <p>Installation chez vous (ou assistée à distance), configuration à l'image de votre atelier, reprise de vos données existantes si besoin, formation de l'équipe, mises à jour et support. <strong>Nous restons éditeur, jamais propriétaires de vos données.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ RÔLES ════ -->
+<section class="section roles-section">
+  <div class="section-inner">
+    <div class="eyebrow reveal">03 — La chaîne</div>
+    <h2 class="section-title reveal d1">
+      Track-Op épouse <span class="accent">la réalité</span> de l'atelier.
+    </h2>
+    <p class="section-sub reveal d2">
+      La responsabilité change de mains au fil du parcours. L'outil respecte cette chaîne — pas l'inverse.
+    </p>
+
+    <div class="roles-grid reveal">
+      <div class="role r1">
+        <div class="role-num">01 · Ouvre le parcours</div>
+        <h3>L'applicateur</h3>
+        <p>Crée la fiche dès la consultation — prise de mesure, type d'appareil, rendez-vous — et valide la rectification. Il reste responsable de sa fiche jusqu'à l'essayage, puis la livraison. Pour une retouche, c'est lui qui donne le top atelier.</p>
+        <span class="tag">Mobile · création de fiche</span>
+        <div class="role-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+      <div class="role r2">
+        <div class="role-num">02 · Dispatche</div>
+        <h3>Le responsable des fabrications</h3>
+        <p>Le maître du dispatch. Il répartit le travail, assigne les techniciens, fixe les priorités. Track-Op lui montre d'un coup d'œil les fiches à faire, les urgences et celles encore sans technicien.</p>
+        <span class="tag">Poste · dispatch & priorités</span>
+        <div class="role-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+      <div class="role r3">
+        <div class="role-num">03 · Fabriquent</div>
+        <h3>Les techniciens-fabricants</h3>
+        <p>Au cœur du système. Ils fabriquent l'appareil (thermoformage, rectification, finitions). Tout le suivi de Track-Op tourne autour de la fabrication — c'est là que se joue le respect des délais.</p>
+        <span class="tag">Mural · vue de production</span>
+      </div>
+    </div>
+    <p style="margin-top:32px;font-size:14px;color:var(--text-mute);font-style:italic;max-width:760px;">Petite équipe ? Quand les applicateurs rectifient ET fabriquent eux-mêmes (cas courant comme chez OE3D), Track-Op le gère naturellement — l'applicateur est alors aussi assigné comme fabricant sur sa propre fiche.</p>
+  </div>
+</section>
+
+<!-- ════ DATA STAY HOME ════ -->
+<section class="section data-stay" id="data">
+  <div class="section-inner">
+    <div class="eyebrow reveal">04 — Vos données</div>
+    <div class="data-stay-grid">
+      <div class="data-stay-text reveal">
+        <h2>Vos données <em>restent vos données.</em></h2>
+        <p>Track-Op tourne sur votre matériel, dans votre atelier. Sauvegarde locale automatique. Copie de sécurité chiffrée — l'hébergeur de la copie ne voit que du chiffré. Et si vous arrêtez un jour, <strong>vous repartez avec l'intégralité de vos données, dans un format ouvert</strong>.</p>
+        <p>Aucune dépendance. Aucun piège. Aucun changement dans vos habitudes : la fiche d'appareil reste votre référence.</p>
+      </div>
+      <div class="data-visual reveal d1">
+        <h4>Garanties</h4>
+        <div class="data-list">
+          <div class="data-item">
+            <div class="check">✓</div>
+            <div class="text"><strong>Hébergement local</strong><span>Sur votre matériel, chez vous.</span></div>
+          </div>
+          <div class="data-item">
+            <div class="check">✓</div>
+            <div class="text"><strong>Sauvegarde chiffrée</strong><span>Copie externalisée, illisible par l'hébergeur.</span></div>
+          </div>
+          <div class="data-item">
+            <div class="check">✓</div>
+            <div class="text"><strong>Réversibilité totale</strong><span>Format ouvert, export complet à tout moment.</span></div>
+          </div>
+          <div class="data-item">
+            <div class="check">✓</div>
+            <div class="text"><strong>Pas de HDS requis</strong><span>Vous hébergez vos propres données — art. L.1111-8 CSP.</span></div>
+          </div>
+          <div class="data-item">
+            <div class="check">✓</div>
+            <div class="text"><strong>RGPD — DPA prêt</strong><span>Contrat de sous-traitance si nous intervenons sur vos données réelles (art. 28).</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ PRÉREQUIS ════ -->
+<section class="section prereq" id="prereq">
+  <div class="section-inner">
+    <div class="eyebrow reveal">05 — Prérequis</div>
+    <h2 class="section-title reveal d1">
+      Ce qu'il faut <span class="accent">prévoir</span> dans l'atelier.
+    </h2>
+    <p class="section-sub reveal d2">
+      Pas besoin d'être informaticien. Voici le matériel à avoir sous la main — le détail chiffré est dans l'annexe technique, pour la personne qui installera.
+    </p>
+
+    <div class="prereq-grid reveal">
+      <div class="prereq-card">
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <h4>Ordinateur hôte</h4>
+        <p>Un ordinateur récent « qui reste allumé » pendant les heures d'ouverture. C'est le cœur de Track-Op.</p>
+        <div class="spec">4 cœurs · 8 Go RAM · SSD 256 Go</div>
+      </div>
+      <div class="prereq-card">
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+        <h4>Écran mural</h4>
+        <p>Une télévision Full HD 16/9 + un mini-PC ou clé HDMI + télécommande sans fil.</p>
+        <div class="spec">TV 16/9 · clé HDMI · télécommande</div>
+      </div>
+      <div class="prereq-card">
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+        <h4>Postes habituels</h4>
+        <p>Rien à installer — un simple navigateur internet suffit sur vos ordinateurs habituels.</p>
+        <div class="spec">Chrome · Safari · Edge · Firefox</div>
+      </div>
+      <div class="prereq-card">
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0114 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01"/></svg></div>
+        <h4>Réseau atelier</h4>
+        <p>Un réseau local fiable (Ethernet conseillé). Les postes et l'écran se parlent entre eux.</p>
+        <div class="spec">LAN · Ethernet conseillé</div>
+      </div>
+      <div class="prereq-card">
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <h4>Onduleur (conseillé)</h4>
+        <p>Une petite batterie de secours qui évite qu'une coupure de courant n'abîme vos données.</p>
+        <div class="spec">UPS · sur l'ordinateur hôte</div>
+      </div>
+      <div class="prereq-card">
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+        <h4>C-Ter à vos côtés</h4>
+        <p>Installation, configuration, formation, mises à jour. On s'occupe de tout — vous gardez la main.</p>
+        <div class="spec">Sur place ou à distance</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ C-TER PREND EN CHARGE ════ -->
+<section class="section">
+  <div class="section-inner">
+    <div class="eyebrow reveal">06 — Ce que nous prenons en charge</div>
+    <h2 class="section-title reveal d1">
+      On s'occupe de tout, <span class="accent">vous gardez la main.</span>
+    </h2>
+    <p class="section-sub reveal d2">
+      C-Ter reste éditeur et installateur, jamais propriétaire de vos données. Notre métier : que ça tourne, chez vous, simplement.
+    </p>
+
+    <div class="cter-care-list reveal">
+      <div class="cter-item">
+        <div class="lbl">01 · Mise en route</div>
+        <div class="name">Installation</div>
+        <p>Chez vous ou assistée à distance. Configuration à l'image de votre atelier.</p>
+      </div>
+      <div class="cter-item">
+        <div class="lbl">02 · Reprise</div>
+        <div class="name">Données existantes</div>
+        <p>Si vous avez déjà un système, on récupère ce qui peut l'être. Pas de rupture.</p>
+      </div>
+      <div class="cter-item">
+        <div class="lbl">03 · Équipe</div>
+        <div class="name">Formation</div>
+        <p>Applicateurs, responsable des fabrications, techniciens. Chacun sa vue, chacun sa main.</p>
+      </div>
+      <div class="cter-item">
+        <div class="lbl">04 · Évolution</div>
+        <div class="name">Mises à jour</div>
+        <p>Sans jamais toucher à vos données. L'outil s'améliore, vos fiches ne bougent pas.</p>
+      </div>
+      <div class="cter-item">
+        <div class="lbl">05 · Au quotidien</div>
+        <div class="name">Support</div>
+        <p>Une équipe joignable, une intervention sans accès à vos données réelles dès que possible.</p>
+      </div>
+      <div class="cter-item">
+        <div class="lbl">06 · À venir</div>
+        <div class="name">VOP : la fiche numérique</div>
+        <p>L'application VOP numérisera la fiche d'appareil (mesures, suivi) sur tablette/mobile.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ CTA FINAL ════ -->
+<section class="cta-final">
+  <div class="cta-final-inner">
+    <h2 class="reveal">Voyez Track-Op<br><span class="accent">en action.</span></h2>
+    <p class="reveal d1">30 minutes en visio avec un atelier en production. Données réelles, pas de slides. Vous repartez avec une idée précise de ce que ça donne chez vous.</p>
+    <div class="reveal d2">
+      <a href="mailto:contact@c-ter.fr?subject=Demande%20de%20d%C3%A9mo%20Track-Op&body=Bonjour%2C%0A%0AJe%20souhaite%20une%20d%C3%A9mo%20Track-Op%20pour%20mon%20atelier.%0A%0A-%20Nom%20de%20l'atelier%20%3A%20%0A-%20Localisation%20%3A%20%0A-%20Nombre%20de%20postes%20%3A%20%0A-%20Cr%C3%A9neau%20pr%C3%A9f%C3%A9r%C3%A9%20%3A%20%0A%0AMerci." class="btn btn-primary">
+        Demander une démo
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ════ FOOTER ════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <svg width="48" height="34" viewBox="0 0 70 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="6" width="56" height="38" rx="3" fill="#0F1F47" stroke="#F2EAD9" stroke-width="2.5"/>
+          <rect x="9" y="12" width="16" height="4" fill="#5A9BD8"/>
+          <rect x="27" y="12" width="6" height="4" fill="#5B8C4F"/>
+          <rect x="9" y="19" width="10" height="4" fill="#E26847"/>
+          <rect x="21" y="19" width="26" height="4" fill="#F5C84A"/>
+          <rect x="9" y="26" width="34" height="4" fill="#5B8C4F" fill-opacity="0.7"/>
+          <rect x="45" y="26" width="4" height="4" fill="#E26847"/>
+          <rect x="9" y="33" width="20" height="4" fill="#5A9BD8" fill-opacity="0.55"/>
+          <path d="M19 44 L17 50 M43 44 L45 50" stroke="#F2EAD9" stroke-width="2.2" stroke-linecap="round"/>
+          <g transform="translate(52 30) rotate(18)">
+            <rect x="0" y="0" width="13" height="27" rx="2" fill="#F2EAD9"/>
+            <circle cx="6.5" cy="7" r="3.4" fill="#E26847"/>
+          </g>
+        </svg>
+        <span>Track<span class="op">Op</span></span>
+      </div>
+      <div class="tagline">le planning, clair d'un coup d'œil</div>
+      <div class="meta">
+        Édité par C-Ter · Matoury, Guyane Française<br>
+        Marque Track-Op™ déposée à l'INPI · N° 5260665<br>
+        <a href="mailto:contact@c-ter.fr" style="color:var(--orange);">contact@c-ter.fr</a> · track-op.fr
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Produit</h4>
+      <a href="#demo">Démo interactive</a>
+      <a href="#how">Comment ça marche</a>
+      <a href="#data">Vos données</a>
+      <a href="#prereq">Prérequis</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="mailto:contact@c-ter.fr">contact@c-ter.fr</a>
+      <a href="mailto:contact@c-ter.fr?subject=Demande%20de%20d%C3%A9mo">Demander une démo</a>
+      <a href="mentions-legales.html">Mentions légales</a>
+    </div>
+    <div class="footer-col">
+      <h4>Confiance</h4>
+      <a href="mentions-legales.html#pi">Marque INPI 5260665</a>
+      <a href="mentions-legales.html#rgpd">RGPD · DPA</a>
+      <a href="mentions-legales.html#rgpd">Réversibilité</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 C-Ter Studio · Tous droits réservés.</span>
+    <span><span class="marker">●</span> System operational</span>
+  </div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+const navProgress = document.getElementById('navProgress');
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = (scrollTop / docHeight) * 100;
+  navProgress.style.width = pct + '%';
+  nav.classList.toggle('scrolled', scrollTop > 30);
+});
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+const track = document.getElementById('carouselTrack');
+const dots = document.querySelectorAll('#carouselDots button');
+const slideLabel = document.getElementById('slideLabel');
+const slideTitle = document.getElementById('slideTitle');
+const slideDesc = document.getElementById('slideDesc');
+const arrowPrev = document.getElementById('arrowPrev');
+const arrowNext = document.getElementById('arrowNext');
+
+const slides = [
+  { label: "01 — L'écran mural", title: "L'atelier en un coup d'œil", desc: "Une télévision grand format affiche le planning de fabrication en temps réel. Coloré, lisible à distance, mis à jour sans intervention. Toute l'équipe voit où en est chaque appareil." },
+  { label: '02 — Le poste de travail', title: 'Saisie, validation, suivi complet', desc: "L'interface du responsable des fabrications. Toutes les fiches en cours, filtres, statuts colorés, actions rapides. Pensé pour le quotidien de l'atelier." },
+  { label: "03 — L'application mobile", title: "Création de fiche en consultation", desc: "L'applicateur ouvre le parcours depuis son téléphone : prise de mesure, type d'appareil, rendez-vous. Synchro instantanée avec les autres supports." }
+];
+
+let current = 0, autoplay;
+
+function goTo(i){
+  current = (i + slides.length) % slides.length;
+  track.style.transform = `translateX(-${current * 100}%)`;
+  dots.forEach((d, idx) => d.classList.toggle('active', idx === current));
+  slideLabel.textContent = slides[current].label;
+  slideTitle.textContent = slides[current].title;
+  slideDesc.textContent = slides[current].desc;
+}
+function startAutoplay(){ autoplay = setInterval(() => goTo(current + 1), 5500); }
+function stopAutoplay(){ clearInterval(autoplay); }
+
+dots.forEach(d => d.addEventListener('click', () => { stopAutoplay(); goTo(parseInt(d.dataset.slide)); startAutoplay(); }));
+arrowPrev.addEventListener('click', () => { stopAutoplay(); goTo(current - 1); startAutoplay(); });
+arrowNext.addEventListener('click', () => { stopAutoplay(); goTo(current + 1); startAutoplay(); });
+
+startAutoplay();
+document.getElementById('carousel').addEventListener('mouseenter', stopAutoplay);
+document.getElementById('carousel').addEventListener('mouseleave', startAutoplay);
+</script>
 </body>
 </html>
