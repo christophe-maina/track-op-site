@@ -544,6 +544,24 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
   .promise{padding:100px 24px;}
 }
 
+/* ════ CONTACT FORM ════ */
+.contact-form{max-width:620px;margin:40px auto 0;text-align:left;display:grid;gap:16px;}
+.cf-row{display:grid;gap:16px;grid-template-columns:1fr 1fr;}
+.cf-field{display:flex;flex-direction:column;gap:6px;}
+.cf-field.full{grid-column:1 / -1;}
+.cf-field label{font-family:var(--font-mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-mute);}
+.cf-field input,.cf-field textarea{
+  font-family:var(--font-display);font-size:15px;color:var(--text);
+  background:rgba(242,234,217,0.04);border:1px solid var(--line-strong);border-radius:8px;
+  padding:12px 14px;width:100%;transition:border-color .2s, box-shadow .2s;
+}
+.cf-field input::placeholder,.cf-field textarea::placeholder{color:var(--text-mute);}
+.cf-field input:focus,.cf-field textarea:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px var(--glow-orange);}
+.cf-field textarea{resize:vertical;min-height:120px;}
+.contact-form .btn-primary{justify-content:center;width:100%;border:none;font-size:16px;margin-top:4px;}
+.cf-note{font-family:var(--font-mono);font-size:11px;color:var(--text-mute);text-align:center;line-height:1.6;margin-top:4px;}
+@media(max-width:560px){.cf-row{grid-template-columns:1fr;}}
+
 /* ════ REVEAL ════ */
 .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(0.22, 1, 0.36, 1), transform .8s cubic-bezier(0.22, 1, 0.36, 1);}
 .reveal.in{opacity:1;transform:translateY(0);}
@@ -580,7 +598,7 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
     <a href="#data">Vos données</a>
     <a href="#prereq">Prérequis</a>
   </div>
-  <a href="mailto:contact@c-ter.fr?subject=Demande%20de%20d%C3%A9mo%20Track-Op" class="nav-cta">Demander une démo →</a>
+  <a href="#contact" class="nav-cta">Demander une démo →</a>
   <div class="nav-progress" id="navProgress"></div>
 </nav>
 
@@ -599,7 +617,7 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
       Track-Op s'installe dans votre atelier, et <strong style="color:var(--text)">vos données patients restent chez vous</strong>. Le logiciel de planification temps réel pour ateliers d'orthopédie, d'orthoprothèse et de podo-orthèse.
     </p>
     <div class="hero-cta-row reveal d3">
-      <a href="mailto:contact@c-ter.fr?subject=Demande%20de%20d%C3%A9mo%20Track-Op" class="btn btn-primary">
+      <a href="#contact" class="btn btn-primary">
         Demander une démo
         <span class="arrow">→</span>
       </a>
@@ -907,16 +925,45 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
 </section>
 
 <!-- ════ CTA FINAL ════ -->
-<section class="cta-final">
+<section class="cta-final" id="contact">
   <div class="cta-final-inner">
     <h2 class="reveal">Voyez Track-Op<br><span class="accent">en action.</span></h2>
-    <p class="reveal d1">30 minutes en visio avec un atelier en production. Données réelles, pas de slides. Vous repartez avec une idée précise de ce que ça donne chez vous.</p>
-    <div class="reveal d2">
-      <a href="mailto:contact@c-ter.fr?subject=Demande%20de%20d%C3%A9mo%20Track-Op&body=Bonjour%2C%0A%0AJe%20souhaite%20une%20d%C3%A9mo%20Track-Op%20pour%20mon%20atelier.%0A%0A-%20Nom%20de%20l'atelier%20%3A%20%0A-%20Localisation%20%3A%20%0A-%20Nombre%20de%20postes%20%3A%20%0A-%20Cr%C3%A9neau%20pr%C3%A9f%C3%A9r%C3%A9%20%3A%20%0A%0AMerci." class="btn btn-primary">
-        Demander une démo
+    <p class="reveal d1">30 minutes en visio avec un atelier en production. Données réelles, pas de slides. Remplissez la fiche ci-dessous, on vous recontacte.</p>
+    <form class="contact-form reveal d2" id="contactForm" novalidate>
+      <div class="cf-row">
+        <div class="cf-field">
+          <label for="cf-atelier">Atelier</label>
+          <input id="cf-atelier" name="atelier" type="text" placeholder="Nom de votre atelier">
+        </div>
+        <div class="cf-field">
+          <label for="cf-ville">Ville / région</label>
+          <input id="cf-ville" name="ville" type="text" placeholder="ex. Cenon (33)">
+        </div>
+      </div>
+      <div class="cf-row">
+        <div class="cf-field">
+          <label for="cf-nom">Votre nom</label>
+          <input id="cf-nom" name="nom" type="text" placeholder="Prénom Nom">
+        </div>
+        <div class="cf-field">
+          <label for="cf-postes">Nombre de postes</label>
+          <input id="cf-postes" name="postes" type="text" placeholder="ex. 3">
+        </div>
+      </div>
+      <div class="cf-field full">
+        <label for="cf-email">Votre email</label>
+        <input id="cf-email" name="email" type="email" placeholder="vous@exemple.fr">
+      </div>
+      <div class="cf-field full">
+        <label for="cf-message">Message</label>
+        <textarea id="cf-message" name="message" placeholder="En deux mots : votre besoin, vos disponibilités pour un échange…"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">
+        Envoyer ma demande
         <span class="arrow">→</span>
-      </a>
-    </div>
+      </button>
+      <p class="cf-note">Le bouton ouvre votre logiciel de messagerie avec le message pré-rempli, vers contact@c-ter.fr.<br>Aucune donnée n'est enregistrée sur ce site.</p>
+    </form>
   </div>
 </section>
 
@@ -959,7 +1006,7 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
     <div class="footer-col">
       <h4>Contact</h4>
       <a href="mailto:contact@c-ter.fr">contact@c-ter.fr</a>
-      <a href="mailto:contact@c-ter.fr?subject=Demande%20de%20d%C3%A9mo">Demander une démo</a>
+      <a href="#contact">Demander une démo</a>
       <a href="mentions-legales.html">Mentions légales</a>
     </div>
     <div class="footer-col">
@@ -1027,6 +1074,31 @@ arrowNext.addEventListener('click', () => { stopAutoplay(); goTo(current + 1); s
 startAutoplay();
 document.getElementById('carousel').addEventListener('mouseenter', stopAutoplay);
 document.getElementById('carousel').addEventListener('mouseleave', startAutoplay);
+
+// ── Fiche contact → ouvre le mail pré-rempli ──
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const val = (id) => (document.getElementById(id)?.value || '').trim();
+    const atelier = val('cf-atelier'), ville = val('cf-ville'), nom = val('cf-nom'),
+          postes = val('cf-postes'), email = val('cf-email'), message = val('cf-message');
+    const subject = 'Demande de démo Track-Op' + (atelier ? ' — ' + atelier : '');
+    const body = [
+      'Bonjour,', '',
+      'Je souhaite une démo de Track-Op pour mon atelier.', '',
+      'Atelier : ' + atelier,
+      'Ville / région : ' + ville,
+      'Nom : ' + nom,
+      'Nombre de postes : ' + postes,
+      'Email : ' + email,
+      '', 'Message :', message, '',
+      'Merci.'
+    ].join('\n');
+    window.location.href = 'mailto:contact@c-ter.fr?subject=' +
+      encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  });
+}
 </script>
 </body>
 </html>
