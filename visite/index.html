@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Track-Op en 90 secondes — la visite guidée</title>
+<meta name="description" content="Suivez un patient et son appareil dans Track-Op : de la saisie en tournée à la livraison, en passant par l'écran d'atelier.">
+<style>
+:root{
+  --bg:#0F1F47; --bg2:#15295A; --bg3:#1B3471; --bg4:#234190;
+  --text:#F2EAD9; --muted:rgba(242,234,217,.55);
+  --line:rgba(242,234,217,.12);
+  --orange:#E8743B; --vert:#5CB85C; --bleu:#5A9BD8; --jaune:#E8C547;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;overflow:hidden}
+#stage{position:fixed;inset:0 0 118px 0}
+.scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3vh;padding:4vh 6vw;opacity:0;transform:translateX(36px);pointer-events:none;transition:opacity .5s ease,transform .5s ease}
+.scene.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.scene h2{font-size:clamp(19px,3.2vw,30px);font-weight:800;letter-spacing:.3px;text-align:center}
+.scene h2 small{display:block;font-size:.55em;font-weight:600;color:var(--muted);margin-top:4px}
+.visuel{width:min(620px,86vw);height:min(46vh,360px);display:flex;align-items:center;justify-content:center}
+.visuel svg{width:100%;height:100%}
+/* ——— sous-titres ——— */
+#soustitre{position:fixed;left:50%;bottom:128px;transform:translateX(-50%);max-width:min(760px,92vw);background:rgba(8,16,38,.85);border:1px solid var(--line);border-radius:12px;padding:12px 20px;font-size:clamp(14px,2.1vw,18px);text-align:center;line-height:1.45;backdrop-filter:blur(6px);transition:opacity .3s}
+/* ——— contrôles ——— */
+#controles{position:fixed;left:0;right:0;bottom:0;height:64px;display:flex;align-items:center;gap:14px;padding:0 18px;background:rgba(8,16,38,.92);border-top:1px solid var(--line)}
+#controles button{background:var(--bg3);border:1px solid var(--line);color:var(--text);border-radius:8px;padding:8px 14px;font-size:16px;cursor:pointer}
+#controles button:hover{background:var(--bg4)}
+#barre{flex:1;height:6px;background:var(--bg2);border-radius:3px;overflow:hidden;cursor:pointer}
+#barre i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--bleu),var(--orange));transition:width .4s}
+#compteur{font-size:13px;color:var(--muted);min-width:46px;text-align:center}
+#ctaDemo{background:var(--orange)!important;border:none!important;font-weight:700;text-decoration:none;color:#fff;border-radius:8px;padding:9px 16px;font-size:14px}
+/* ——— écran d'ouverture ——— */
+#ouverture{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;background:radial-gradient(circle at 70% 30%,#16264a 0%,var(--bg) 65%);text-align:center;padding:6vw}
+#ouverture h1{font-size:clamp(26px,5vw,46px);font-weight:800}
+#ouverture h1 span{color:var(--orange)}
+#ouverture p{color:var(--muted);max-width:560px}
+#btnLancer{display:flex;align-items:center;gap:14px;background:var(--orange);border:none;color:#fff;font-size:clamp(17px,2.6vw,22px);font-weight:800;border-radius:60px;padding:18px 38px;cursor:pointer;box-shadow:0 0 44px rgba(232,116,59,.45);transition:transform .15s}
+#btnLancer:hover{transform:scale(1.04)}
+#sansSon{background:none;border:none;color:var(--muted);text-decoration:underline;cursor:pointer;font-size:14px}
+.version{position:fixed;right:12px;top:10px;font-size:11px;color:var(--muted);opacity:.7;z-index:60}
+/* ——— animations des vignettes (déclenchées par .scene.anime) ——— */
+.scene svg .a{opacity:0}
+.scene.anime svg .a{animation:apparait .5s ease forwards}
+.scene.anime svg .a.d1{animation-delay:.8s}.scene.anime svg .a.d2{animation-delay:1.7s}
+.scene.anime svg .a.d3{animation-delay:2.6s}.scene.anime svg .a.d4{animation-delay:3.5s}
+.scene.anime svg .a.d5{animation-delay:4.6s}.scene.anime svg .a.d6{animation-delay:5.6s}
+@keyframes apparait{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.scene.anime svg .tampon{animation:tampon .55s cubic-bezier(.2,2.4,.4,1) 2.4s forwards;opacity:0;transform-origin:center}
+@keyframes tampon{0%{opacity:0;transform:scale(2.4) rotate(-7deg)}100%{opacity:1;transform:scale(1) rotate(-3deg)}}
+.scene.anime svg .curseur{animation:curseur 6s ease-in-out .6s forwards}
+@keyframes curseur{0%{transform:translate(0,0)}22%{transform:translate(168px,56px)}34%{transform:translate(168px,56px)}55%{transform:translate(250px,92px)}66%{transform:translate(250px,92px)}88%{transform:translate(330px,128px)}100%{transform:translate(330px,128px)}}
+.scene.anime svg .ripple{animation:ripple 1s ease-out 2.6s forwards, ripple 1s ease-out 4.6s forwards;opacity:0;transform-origin:center}
+@keyframes ripple{0%{opacity:.8;transform:scale(.2)}100%{opacity:0;transform:scale(1.6)}}
+.scene.anime svg .marche{animation:marche 5s ease-in-out .5s forwards}
+@keyframes marche{from{transform:translateX(0)}to{transform:translateX(300px)}}
+.scene.anime svg .pulse2{animation:pulse2 1.4s ease-in-out 1s infinite}
+@keyframes pulse2{0%,100%{opacity:1}50%{opacity:.45}}
+.scene.anime svg .glisse{animation:glisse .8s ease 1.4s forwards;opacity:0}
+@keyframes glisse{from{opacity:0;transform:translateY(-46px)}to{opacity:1;transform:none}}
+@media (max-height:560px){.visuel{height:38vh}}
+</style>
+</head>
+<body>
+<div class="version">Track-Op · visite 1.0.00</div>
+
+<!-- ═══════════ ÉCRAN D'OUVERTURE ═══════════ -->
+<div id="ouverture">
+  <h1>Track-Op en <span>90 secondes</span></h1>
+  <p>Suivez <strong>Jean D.</strong> et son appareil, de la prise de mesure en tournée jusqu'à la livraison — en passant par le planning et l'écran d'atelier.</p>
+  <button id="btnLancer">▶&nbsp; Lancer la visite <small style="font-weight:400;font-size:.7em">(avec le son)</small></button>
+  <button id="sansSon">Version silencieuse (sous-titres seuls)</button>
+</div>
+
+<div id="stage">
+
+<!-- ═ SCÈNE 1 · OUVERTURE ═ -->
+<section class="scene">
+  <h2>Le chemin d'un appareil<small>de la mesure à la livraison</small></h2>
+  <div class="visuel"><svg viewBox="0 0 620 300">
+    <circle cx="110" cy="150" r="46" fill="none" stroke="#5A9BD8" stroke-width="3" class="a"/>
+    <circle cx="110" cy="132" r="14" fill="#F2EAD9" class="a"/>
+    <path d="M86 178 q24 -26 48 0 v14 h-48 z" fill="#F2EAD9" class="a"/>
+    <path d="M170 150 H 270" stroke="#E8743B" stroke-width="3" stroke-dasharray="7 7" class="a d1"/>
+    <rect x="280" y="100" width="160" height="100" rx="10" fill="#15295A" stroke="#5A9BD8" class="a d2"/>
+    <text x="360" y="140" text-anchor="middle" fill="#F2EAD9" font-size="15" font-weight="700" class="a d2">TRACK-OP</text>
+    <text x="360" y="166" text-anchor="middle" fill="#5A9BD8" font-size="11" class="a d2">planning · atelier · display</text>
+    <path d="M450 150 H 540" stroke="#E8743B" stroke-width="3" stroke-dasharray="7 7" class="a d3"/>
+    <path d="M555 120 l18 10 v34 q-2 22 -14 30 l-10 -8 q8 -10 6 -26 v-30 z" fill="#5CB85C" class="a d4"/>
+    <text x="560" y="228" text-anchor="middle" fill="#5CB85C" font-size="11" class="a d4">livré ✓</text>
+  </svg></div>
+</section>
+
+<!-- ═ SCÈNE 2 · SAISIE MOBILE ═ -->
+<section class="scene">
+  <h2>1 · En tournée : la fiche naît sur le téléphone<small>30 secondes, au chevet du patient</small></h2>
+  <div class="visuel"><svg viewBox="0 0 620 320">
+    <rect x="225" y="10" width="170" height="300" rx="22" fill="#15295A" stroke="#5A9BD8" stroke-width="2"/>
+    <rect x="245" y="40" width="130" height="22" rx="5" fill="#1B3471" class="a"/>
+    <text x="252" y="56" fill="#F2EAD9" font-size="11" class="a">👤 Jean D.</text>
+    <rect x="245" y="72" width="130" height="22" rx="5" fill="#1B3471" class="a d1"/>
+    <text x="252" y="88" fill="#F2EAD9" font-size="11" class="a d1">🦿 Releveur</text>
+    <rect x="245" y="104" width="130" height="22" rx="5" fill="#1B3471" class="a d2"/>
+    <text x="252" y="120" fill="#F2EAD9" font-size="11" class="a d2">📍 Domicile</text>
+    <rect x="245" y="136" width="130" height="22" rx="5" fill="#1B3471" class="a d3"/>
+    <text x="252" y="152" fill="#F2EAD9" font-size="11" class="a d3">📅 Essayage : J+10</text>
+    <rect x="245" y="252" width="130" height="32" rx="7" fill="#E8743B" class="a d4 pulse2"/>
+    <text x="310" y="273" text-anchor="middle" fill="#fff" font-size="12" font-weight="700" class="a d4">📤 Créer la fiche</text>
+    <circle cx="120" cy="170" r="34" fill="none" stroke="#F2EAD9" stroke-width="2" opacity=".6"/>
+    <circle cx="120" cy="157" r="10" fill="#F2EAD9" opacity=".75"/>
+    <path d="M103 190 q17 -18 34 0 v8 h-34 z" fill="#F2EAD9" opacity=".75"/>
+    <text x="120" y="232" text-anchor="middle" fill="#F2EAD9" font-size="11" opacity=".6">l'applicateur</text>
+    <path d="M460 160 q40 -55 -38 -120" stroke="#5CB85C" stroke-width="2.5" fill="none" stroke-dasharray="6 6" class="a d5"/>
+    <text x="475" y="185" fill="#5CB85C" font-size="12" font-weight="700" class="a d5">→ planning atelier</text>
+  </svg></div>
+</section>
+
+<!-- ═ SCÈNE 3 · LE PLANNING ═ -->
+<section class="scene">
+  <h2>2 · La fiche apparaît sur le planning<small>qui fait quoi, pour quand — d'un coup d'œil</small></h2>
+  <div class="visuel"><svg viewBox="0 0 620 320">
+    <rect x="20" y="14" width="580" height="292" rx="10" fill="#15295A" stroke="#5A9BD8" stroke-width="1.5"/>
+    <text x="40" y="44" fill="#F2EAD9" font-size="13" font-weight="700">Planning atelier</text>
+    <g font-size="10" fill="#F2EAD9" opacity=".55">
+      <text x="48" y="74">MESURES</text><text x="190" y="74">RECTIF</text>
+      <text x="330" y="74">THERMO</text><text x="470" y="74">ESSAYAGE</text>
+    </g>
+    <line x1="170" y1="60" x2="170" y2="290" stroke="#F2EAD9" opacity=".1"/>
+    <line x1="310" y1="60" x2="310" y2="290" stroke="#F2EAD9" opacity=".1"/>
+    <line x1="450" y1="60" x2="450" y2="290" stroke="#F2EAD9" opacity=".1"/>
+    <g opacity=".5">
+      <rect x="186" y="86" width="112" height="40" rx="6" fill="#1B3471"/><text x="196" y="103" fill="#F2EAD9" font-size="10">Marie L. · corset</text><text x="196" y="118" fill="#5A9BD8" font-size="9">tech. TM · jeu. ●</text>
+      <rect x="326" y="86" width="112" height="40" rx="6" fill="#1B3471"/><text x="336" y="103" fill="#F2EAD9" font-size="10">Paul R. · tibiale</text><text x="336" y="118" fill="#5A9BD8" font-size="9">tech. BR · ven. ●</text>
+      <rect x="466" y="86" width="112" height="40" rx="6" fill="#1B3471"/><text x="476" y="103" fill="#F2EAD9" font-size="10">Aline T. · semelles</text><text x="476" y="118" fill="#5A9BD8" font-size="9">applic. KA · lun. ●</text>
+    </g>
+    <rect x="46" y="86" width="112" height="46" rx="6" fill="#234190" stroke="#E8743B" stroke-width="2" class="glisse"/>
+    <text x="56" y="104" fill="#F2EAD9" font-size="10" font-weight="700" class="glisse">Jean D. · releveur</text>
+    <text x="56" y="120" fill="#E8C547" font-size="9" class="glisse">essayage J+10 ⏱</text>
+    <text x="46" y="170" fill="#5CB85C" font-size="11" class="a d3">✓ visible par toute l'équipe, en temps réel</text>
+    <text x="46" y="196" fill="#F2EAD9" opacity=".6" font-size="11" class="a d4">— urgences et retards remontent tout seuls</text>
+  </svg></div>
+</section>
+
+<!-- ═ SCÈNE 4 · LE DISPLAY ATELIER ═ -->
+<section class="scene">
+  <h2>3 · À l'atelier : on valide à l'écran mural<small>clic sur la fiche, clic sur l'étape, clic sur ses initiales</small></h2>
+  <div class="visuel"><svg viewBox="0 0 620 320">
+    <rect x="60" y="14" width="500" height="268" rx="12" fill="#0a1530" stroke="#5A9BD8" stroke-width="3"/>
+    <rect x="270" y="284" width="80" height="12" fill="#15295A"/>
+    <text x="84" y="48" fill="#F2EAD9" font-size="13" font-weight="700">📺 Écran d'atelier <tspan opacity=".5" font-size="10">(TV ou simple écran)</tspan></text>
+    <rect x="84" y="62" width="200" height="44" rx="6" fill="#1B3471" class="pulse2"/>
+    <text x="94" y="80" fill="#F2EAD9" font-size="11" font-weight="700">Jean D. · releveur</text>
+    <text x="94" y="96" fill="#5A9BD8" font-size="10">→ thermoformage</text>
+    <rect x="84" y="116" width="200" height="38" rx="6" fill="#1B3471" opacity=".45"/>
+    <rect x="84" y="162" width="200" height="38" rx="6" fill="#1B3471" opacity=".45"/>
+    <rect x="320" y="62" width="216" height="110" rx="8" fill="#15295A" stroke="#F2EAD9" stroke-opacity=".2" class="a d2"/>
+    <text x="334" y="86" fill="#F2EAD9" font-size="11" class="a d2">Étape terminée :</text>
+    <rect x="334" y="96" width="186" height="26" rx="5" fill="#234190" class="a d2"/>
+    <text x="344" y="114" fill="#F2EAD9" font-size="10" class="a d2">✅ Thermoformage terminé</text>
+    <rect x="334" y="130" width="88" height="26" rx="5" fill="#5CB85C" class="a d3"/>
+    <text x="378" y="148" text-anchor="middle" fill="#fff" font-size="11" font-weight="800" class="a d3">AL ✓</text>
+    <text x="430" y="148" fill="#F2EAD9" opacity=".55" font-size="9" class="a d3">tes initiales = ta signature</text>
+    <circle cx="120" cy="40" r="9" fill="#E8C547" class="curseur"/>
+    <circle cx="378" cy="143" r="16" fill="none" stroke="#E8C547" stroke-width="3" class="ripple"/>
+    <text x="84" y="252" fill="#5CB85C" font-size="11" class="a d5">✓ validé, signé, horodaté — la charge se met à jour</text>
+  </svg></div>
+</section>
+
+<!-- ═ SCÈNE 5 · ESSAYAGE ═ -->
+<section class="scene">
+  <h2>4 · L'essayage patient<small>conforme → fabrication définitive</small></h2>
+  <div class="visuel"><svg viewBox="0 0 620 300">
+    <circle cx="180" cy="110" r="16" fill="#F2EAD9" class="a"/>
+    <path d="M152 168 q28 -34 56 0 v60 h-56 z" fill="#F2EAD9" class="a"/>
+    <path d="M196 228 v40 l14 0" stroke="#5CB85C" stroke-width="9" fill="none" stroke-linecap="round" class="a d1"/>
+    <text x="180" y="290" text-anchor="middle" fill="#F2EAD9" font-size="11" opacity=".6" class="a">Jean D. + releveur</text>
+    <circle cx="330" cy="120" r="14" fill="#5A9BD8" class="a d2"/>
+    <path d="M306 172 q24 -30 48 0 v52 h-48 z" fill="#5A9BD8" class="a d2"/>
+    <text x="330" y="252" text-anchor="middle" fill="#5A9BD8" font-size="11" class="a d2">l'applicateur contrôle</text>
+    <g class="a d3">
+      <circle cx="470" cy="120" r="34" fill="none" stroke="#5CB85C" stroke-width="4"/>
+      <path d="M452 120 l13 13 24 -26" stroke="#5CB85C" stroke-width="6" fill="none" stroke-linecap="round"/>
+    </g>
+    <text x="470" y="186" text-anchor="middle" fill="#5CB85C" font-size="13" font-weight="700" class="a d3">Conforme</text>
+    <text x="470" y="210" text-anchor="middle" fill="#F2EAD9" opacity=".65" font-size="11" class="a d4">→ finitions, garniture,</text>
+    <text x="470" y="228" text-anchor="middle" fill="#F2EAD9" opacity=".65" font-size="11" class="a d4">préparation livraison</text>
+  </svg></div>
+</section>
+
+<!-- ═ SCÈNE 6 · MISE EN LIVRAISON ═ -->
+<section class="scene">
+  <h2>5 · La mise en livraison<small>numéro unique et définitif + QR code</small></h2>
+  <div class="visuel"><svg viewBox="0 0 620 320">
+    <rect x="110" y="20" width="400" height="280" rx="12" fill="#15295A" stroke="#5A9BD8" stroke-width="1.5"/>
+    <text x="134" y="56" fill="#F2EAD9" font-size="14" font-weight="700">📦 Mise en livraison — Jean D.</text>
+    <rect x="134" y="74" width="240" height="30" rx="6" fill="#1B3471" class="a"/>
+    <text x="144" y="94" fill="#F2EAD9" font-size="11" class="a">N° identification : GES-2026-0412</text>
+    <g class="tampon">
+      <rect x="134" y="124" width="240" height="56" rx="8" fill="none" stroke="#E8743B" stroke-width="3"/>
+      <text x="254" y="152" text-anchor="middle" fill="#E8743B" font-size="22" font-weight="800" letter-spacing="3">007-06-26</text>
+      <text x="254" y="170" text-anchor="middle" fill="#E8743B" font-size="9">N° DE FABRICATION · DÉFINITIF</text>
+    </g>
+    <g class="a d3">
+      <rect x="404" y="84" width="84" height="84" rx="6" fill="#F2EAD9"/>
+      <g fill="#0F1F47">
+        <rect x="412" y="92" width="20" height="20"/><rect x="460" y="92" width="20" height="20"/>
+        <rect x="412" y="140" width="20" height="20"/><rect x="444" y="124" width="12" height="12"/>
+        <rect x="460" y="140" width="8" height="8"/><rect x="440" y="148" width="8" height="8"/>
+        <rect x="444" y="96" width="8" height="8"/><rect x="416" y="124" width="8" height="8"/>
+      </g>
+    </g>
+    <text x="446" y="188" text-anchor="middle" fill="#F2EAD9" opacity=".6" font-size="10" class="a d3">à coller sur l'appareil</text>
+    <text x="134" y="226" fill="#F2EAD9" opacity=".75" font-size="11" class="a d4">⚙ attribué automatiquement, jamais réattribué</text>
+    <text x="134" y="250" fill="#F2EAD9" opacity=".75" font-size="11" class="a d5">📺 checklist de sortie affichée à l'écran d'atelier</text>
+  </svg></div>
+</section>
+
+<!-- ═ SCÈNE 7 · SECRÉTARIAT ═ -->
+<section class="scene">
+  <h2>6 · Au secrétariat : le numéro rejoint le dossier<small>plus de courses à l'atelier</small></h2>
+  <div class="visuel"><svg viewBox="0 0 620 300">
+    <rect x="90" y="16" width="440" height="268" rx="10" fill="#15295A" stroke="#5A9BD8" stroke-width="1.5"/>
+    <text x="114" y="48" fill="#F2EAD9" font-size="13" font-weight="700">🏷 Numéros de fabrication</text>
+    <rect x="370" y="32" width="138" height="24" rx="12" fill="#1B3471" class="a"/>
+    <text x="439" y="48" text-anchor="middle" fill="#E8C547" font-size="10" class="a">filtre : à reporter seulement</text>
+    <g font-size="11">
+      <rect x="114" y="72" width="392" height="34" rx="6" fill="#1B3471" class="a d1"/>
+      <text x="126" y="93" fill="#F2EAD9" class="a d1">007-06-26 · Jean D. · releveur</text>
+      <rect x="430" y="79" width="66" height="20" rx="10" fill="#5CB85C" class="a d3"/>
+      <text x="463" y="93" text-anchor="middle" fill="#fff" font-size="9" font-weight="700" class="a d3">Reporté ✓ CL</text>
+      <rect x="114" y="114" width="392" height="34" rx="6" fill="#1B3471" opacity=".5" class="a d2"/>
+      <text x="126" y="135" fill="#F2EAD9" opacity=".6" class="a d2">006-06-26 · Paul R. · tibiale</text>
+      <rect x="430" y="121" width="66" height="20" rx="10" fill="none" stroke="#E8C547" class="a d2"/>
+      <text x="463" y="135" text-anchor="middle" fill="#E8C547" font-size="9" class="a d2">à reporter</text>
+    </g>
+    <text x="114" y="196" fill="#F2EAD9" opacity=".75" font-size="11" class="a d4">✓ chaque report est signé et daté</text>
+    <text x="114" y="222" fill="#F2EAD9" opacity=".75" font-size="11" class="a d5">✓ numéro reporté = dossier complet</text>
+    <text x="114" y="256" fill="#5A9BD8" font-size="11" class="a d5">Le pont fabrication ↔ administratif existe — et il soulage.</text>
+  </svg></div>
+</section>
+
+<!-- ═ SCÈNE 8 · LA SORTIE ═ -->
+<section class="scene">
+  <h2>7 · Jean repart appareillé<small>le QR code le suit</small></h2>
+  <div class="visuel"><svg viewBox="0 0 620 300">
+    <line x1="40" y1="248" x2="580" y2="248" stroke="#F2EAD9" stroke-opacity=".18" stroke-width="2"/>
+    <g class="marche">
+      <circle cx="120" cy="120" r="15" fill="#F2EAD9"/>
+      <path d="M96 174 q24 -30 48 0 v46 h-48 z" fill="#F2EAD9"/>
+      <path d="M112 220 v22 m16 -22 v22 l12 0" stroke="#5CB85C" stroke-width="7" fill="none" stroke-linecap="round"/>
+    </g>
+    <g class="a d3">
+      <rect x="430" y="60" width="120" height="120" rx="10" fill="#F2EAD9"/>
+      <g fill="#0F1F47">
+        <rect x="442" y="72" width="26" height="26"/><rect x="512" y="72" width="26" height="26"/>
+        <rect x="442" y="142" width="26" height="26"/><rect x="486" y="116" width="16" height="16"/>
+        <rect x="512" y="142" width="12" height="12"/><rect x="480" y="148" width="10" height="10"/>
+      </g>
+    </g>
+    <g class="a d4">
+      <rect x="396" y="196" width="190" height="58" rx="10" fill="#15295A" stroke="#5A9BD8"/>
+      <text x="410" y="218" fill="#F2EAD9" font-size="10">📲 scan → mode d'emploi,</text>
+      <text x="410" y="234" fill="#F2EAD9" font-size="10">coordonnées de l'atelier,</text>
+      <text x="410" y="248" fill="#F2EAD9" font-size="10">numéro de l'appareil</text>
+    </g>
+  </svg></div>
+</section>
+
+<!-- ═ SCÈNE 9 · FINAL ═ -->
+<section class="scene">
+  <h2 style="font-size:clamp(22px,4vw,38px)">« Nous ne changeons pas<br>vos habitudes. »</h2>
+  <div class="visuel" style="height:auto"><svg viewBox="0 0 620 170">
+    <text x="310" y="36" text-anchor="middle" fill="#F2EAD9" opacity=".85" font-size="14" class="a">Vos fiches restent vos fiches — Track-Op ajoute la lisibilité.</text>
+    <text x="310" y="72" text-anchor="middle" fill="#5A9BD8" font-size="13" class="a d1">Logo · vocabulaire · étapes · thème : tout se personnalise.</text>
+    <text x="310" y="108" text-anchor="middle" fill="#F2EAD9" opacity=".6" font-size="12" class="a d2">Orthoprothèse · podo-orthèse · en fonction en atelier depuis 2026</text>
+    <text x="310" y="150" text-anchor="middle" fill="#E8743B" font-size="16" font-weight="800" class="a d3">→ Demandez une démonstration</text>
+  </svg></div>
+</section>
+
+</div><!-- /stage -->
+
+<div id="soustitre"></div>
+
+<div id="controles">
+  <button id="bPrec" title="Scène précédente">⏮</button>
+  <button id="bPlay" title="Lecture / pause">▶</button>
+  <button id="bSuiv" title="Scène suivante">⏭</button>
+  <div id="barre"><i></i></div>
+  <span id="compteur">– / –</span>
+  <button id="bSon" title="Couper / activer la voix">🔊</button>
+  <a id="ctaDemo" href="/#contact">Demander une démo</a>
+</div>
+
+<script>
+// ═══ Track-Op · La visite en 90 secondes — moteur ═══
+// Narration : synthèse vocale du navigateur (fr-FR), démarrée par le clic
+// d'ouverture (les navigateurs exigent un geste utilisateur pour le son).
+// Sous-titres permanents ; sans voix disponible, minuterie de lecture.
+const NARRATIONS = [
+  "Voici Track-Op. Suivez Jean, et son appareil, de la prise de mesure jusqu'à la livraison.",
+  "Tout commence en tournée. L'applicateur crée la fiche sur son téléphone, en trente secondes, au chevet du patient.",
+  "La fiche apparaît aussitôt sur le planning de l'atelier. Chacun voit qui fait quoi, et pour quand. Les urgences remontent toutes seules.",
+  "À l'atelier, l'écran mural affiche le travail en cours. Une étape terminée ? On clique sa fiche, on clique l'étape, on signe de ses initiales. C'est validé, c'est tracé.",
+  "Jean vient essayer son appareil. Conforme ? Direction la fabrication définitive : finitions, garniture, préparation.",
+  "À la mise en livraison, Track-Op attribue un numéro de fabrication unique et définitif, et génère le QR code à coller sur l'appareil.",
+  "Au secrétariat, fini les allers-retours : la liste des numéros à reporter est prête. On reporte, on coche, le dossier est complet.",
+  "Jean repart appareillé. En scannant le QR code, il retrouve le mode d'emploi et les coordonnées de son atelier.",
+  "Track-Op ne change pas vos habitudes : il rend l'atelier lisible. Et tout se personnalise, jusqu'au vocabulaire de votre métier. Demandez une démonstration."
+];
+const scenes = [...document.querySelectorAll('.scene')];
+const st = document.getElementById('soustitre');
+const barre = document.querySelector('#barre i');
+const compteur = document.getElementById('compteur');
+const bPlay = document.getElementById('bPlay');
+const bSon = document.getElementById('bSon');
+let i = 0, lecture = false, son = true, timer = null, voixFr = null;
+
+function chargerVoix(){
+  const v = speechSynthesis.getVoices().filter(x => x.lang && x.lang.startsWith('fr'));
+  voixFr = v.find(x => /thomas|am[ée]lie|audrey|google/i.test(x.name)) || v[0] || null;
+}
+if ('speechSynthesis' in window){ chargerVoix(); speechSynthesis.onvoiceschanged = chargerVoix; }
+
+function dureeLecture(txt){ return Math.max(5200, txt.length * 72); } // repli sans voix
+
+function montrer(n, animer = true){
+  i = (n + scenes.length) % scenes.length;
+  scenes.forEach((s,k) => { s.classList.toggle('active', k === i); s.classList.remove('anime'); });
+  if (animer){ const s = scenes[i]; void s.offsetWidth; s.classList.add('anime'); } // redémarre les animations CSS
+  st.textContent = NARRATIONS[i];
+  barre.style.width = ((i+1)/scenes.length*100) + '%';
+  compteur.textContent = (i+1) + ' / ' + scenes.length;
+}
+
+function direEtEnchainer(){
+  clearTimeout(timer);
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  if (!lecture) return;
+  const txt = NARRATIONS[i];
+  let suivantLance = false;
+  const suivant = () => {
+    if (suivantLance || !lecture) return; suivantLance = true;
+    if (i < scenes.length - 1){ montrer(i+1); direEtEnchainer(); }
+    else { lecture = false; bPlay.textContent = '↻'; } // fin du film
+  };
+  if (son && 'speechSynthesis' in window && voixFr !== undefined){
+    const u = new SpeechSynthesisUtterance(txt);
+    u.lang = 'fr-FR'; if (voixFr) u.voice = voixFr; u.rate = 1.02;
+    u.onend = () => { timer = setTimeout(suivant, 900); };
+    u.onerror = () => { timer = setTimeout(suivant, dureeLecture(txt)); };
+    speechSynthesis.speak(u);
+    timer = setTimeout(suivant, dureeLecture(txt) + 9000); // ceinture si onend ne vient jamais
+  } else {
+    timer = setTimeout(suivant, dureeLecture(txt));
+  }
+}
+
+function jouer(){ lecture = true; bPlay.textContent = '❚❚'; direEtEnchainer(); }
+function pause(){ lecture = false; bPlay.textContent = '▶'; clearTimeout(timer); if ('speechSynthesis' in window) speechSynthesis.cancel(); }
+
+bPlay.onclick = () => { if (lecture) pause(); else { if (bPlay.textContent === '↻') montrer(0); jouer(); } };
+document.getElementById('bPrec').onclick = () => { pause(); montrer(i-1); };
+document.getElementById('bSuiv').onclick = () => { pause(); montrer(i+1); };
+bSon.onclick = () => { son = !son; bSon.textContent = son ? '🔊' : '🔇'; if (!son && 'speechSynthesis' in window) speechSynthesis.cancel(); if (lecture) direEtEnchainer(); };
+document.getElementById('barre').onclick = e => {
+  const r = e.currentTarget.getBoundingClientRect();
+  pause(); montrer(Math.floor((e.clientX - r.left)/r.width * scenes.length));
+};
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight'){ pause(); montrer(i+1); }
+  if (e.key === 'ArrowLeft'){ pause(); montrer(i-1); }
+  if (e.key === ' '){ e.preventDefault(); bPlay.onclick(); }
+});
+
+function demarrer(avecSon){
+  son = avecSon; bSon.textContent = son ? '🔊' : '🔇';
+  document.getElementById('ouverture').style.display = 'none';
+  montrer(0); jouer();
+}
+document.getElementById('btnLancer').onclick = () => demarrer(true);
+document.getElementById('sansSon').onclick = () => demarrer(false);
+// Lien direct vers une scène : /visite/?scene=4 (sans son, en pause — pour revue et partage)
+const sc = new URLSearchParams(location.search).get('scene');
+if (sc !== null && !isNaN(+sc)){
+  son = false; bSon.textContent = '🔇';
+  document.getElementById('ouverture').style.display = 'none';
+  montrer(Math.min(Math.max(+sc-1,0), scenes.length-1));
+} else montrer(0, false);
+</script>
+</body>
+</html>
