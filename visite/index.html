@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Track-Op en 90 secondes — la visite guidée</title>
+<title>Track-Op en 2 minutes — la visite guidée</title>
 <meta name="description" content="Suivez un patient et son appareil dans Track-Op : de la saisie en tournée à la livraison, en passant par l'écran d'atelier.">
 <style>
 :root{
@@ -64,11 +64,11 @@ body{background:var(--bg);color:var(--text);font:16px/1.5 -apple-system,BlinkMac
 </style>
 </head>
 <body>
-<div class="version">Track-Op · visite 1.0.00</div>
+<div class="version">Track-Op · visite 1.1.00</div>
 
 <!-- ═══════════ ÉCRAN D'OUVERTURE ═══════════ -->
 <div id="ouverture">
-  <h1>Track-Op en <span>90 secondes</span></h1>
+  <h1>Track-Op en <span>2 minutes</span></h1>
   <p>Suivez <strong>Jean D.</strong> et son appareil, de la prise de mesure en tournée jusqu'à la livraison — en passant par le planning et l'écran d'atelier.</p>
   <button id="btnLancer">▶&nbsp; Lancer la visite <small style="font-weight:400;font-size:.7em">(avec le son)</small></button>
   <button id="sansSon">Version silencieuse (sous-titres seuls)</button>
@@ -143,9 +143,37 @@ body{background:var(--bg);color:var(--text);font:16px/1.5 -apple-system,BlinkMac
   </svg></div>
 </section>
 
+<!-- ═ SCÈNE · TEMPS AJUSTABLES ═ -->
+<section class="scene">
+  <h2>3 · Des temps de travail qui s'adaptent<small>chaque dossier a sa complexité</small></h2>
+  <div class="visuel"><svg viewBox="0 0 620 300">
+    <rect x="40" y="30" width="280" height="150" rx="10" fill="#15295A" stroke="#5A9BD8" stroke-width="1.5"/>
+    <text x="60" y="60" fill="#F2EAD9" font-size="13" font-weight="700">Jean D. · releveur</text>
+    <g class="a">
+      <text x="60" y="92" fill="#F2EAD9" opacity=".7" font-size="12">Temps prévu (barème) : 6 h</text>
+      <line x1="60" y1="88" x2="230" y2="88" stroke="#E8743B" stroke-width="2" class="a d2"/>
+    </g>
+    <g class="a d2">
+      <rect x="56" y="106" width="160" height="30" rx="6" fill="#234190" stroke="#E8743B" stroke-width="1.5"/>
+      <text x="68" y="126" fill="#F2EAD9" font-size="13" font-weight="700">→ 9 h · dossier complexe</text>
+    </g>
+    <text x="60" y="164" fill="#5CB85C" font-size="11" class="a d3">✎ modifiable sur la fiche, à tout moment</text>
+    <text x="430" y="56" text-anchor="middle" fill="#F2EAD9" opacity=".7" font-size="12" class="a d3">la charge se recalcule :</text>
+    <g class="a d4">
+      <rect x="370" y="180" width="34" height="60" rx="4" fill="#5A9BD8"/>
+      <rect x="418" y="140" width="34" height="100" rx="4" fill="#E8743B"/>
+      <rect x="466" y="200" width="34" height="40" rx="4" fill="#5A9BD8"/>
+      <text x="387" y="262" text-anchor="middle" fill="#F2EAD9" font-size="10">AL</text>
+      <text x="435" y="262" text-anchor="middle" fill="#F2EAD9" font-size="10">TM</text>
+      <text x="483" y="262" text-anchor="middle" fill="#F2EAD9" font-size="10">BR</text>
+    </g>
+    <text x="435" y="288" text-anchor="middle" fill="#F2EAD9" opacity=".55" font-size="10" class="a d5">lissage des flux, en temps réel</text>
+  </svg></div>
+</section>
+
 <!-- ═ SCÈNE 4 · LE DISPLAY ATELIER ═ -->
 <section class="scene">
-  <h2>3 · À l'atelier : on valide à l'écran mural<small>clic sur la fiche, clic sur l'étape, clic sur ses initiales</small></h2>
+  <h2>4 · À l'atelier : on valide à l'écran mural<small>clic sur la fiche, clic sur l'étape, clic sur ses initiales</small></h2>
   <div class="visuel"><svg viewBox="0 0 620 320">
     <rect x="60" y="14" width="500" height="268" rx="12" fill="#0a1530" stroke="#5A9BD8" stroke-width="3"/>
     <rect x="270" y="284" width="80" height="12" fill="#15295A"/>
@@ -168,9 +196,33 @@ body{background:var(--bg);color:var(--text);font:16px/1.5 -apple-system,BlinkMac
   </svg></div>
 </section>
 
-<!-- ═ SCÈNE 5 · ESSAYAGE ═ -->
+<!-- ═ SCÈNE · CONTRÔLES QUALITÉ ═ -->
 <section class="scene">
-  <h2>4 · L'essayage patient<small>conforme → fabrication définitive</small></h2>
+  <h2>5 · Les étapes de contrôle<small>qui, quoi, quand — tout est tracé</small></h2>
+  <div class="visuel"><svg viewBox="0 0 620 300">
+    <rect x="70" y="20" width="480" height="260" rx="10" fill="#15295A" stroke="#5A9BD8" stroke-width="1.5"/>
+    <text x="94" y="52" fill="#F2EAD9" font-size="13" font-weight="700">🛡 Contrôles qualité</text>
+    <g font-size="11">
+      <rect x="94" y="70" width="432" height="38" rx="6" fill="#1B3471" class="a"/>
+      <text x="108" y="88" fill="#F2EAD9" class="a">Sortie de mesures</text>
+      <text x="108" y="101" fill="#5A9BD8" font-size="9" class="a">confirmée par l'applicateur — la rectification peut commencer</text>
+      <circle cx="500" cy="89" r="10" fill="#5CB85C" class="a d1"/><path d="M495 89 l4 4 7 -8" stroke="#fff" stroke-width="2" fill="none" class="a d1"/>
+      <rect x="94" y="116" width="432" height="38" rx="6" fill="#1B3471" stroke="#E8743B" class="a d2"/>
+      <text x="108" y="134" fill="#F2EAD9" class="a d2">Rectification — contrôle croisé OBLIGATOIRE</text>
+      <text x="108" y="147" fill="#E8C547" font-size="9" class="a d2">le technicien rectifie, seul l'applicateur responsable valide</text>
+      <circle cx="500" cy="135" r="10" fill="#5CB85C" class="a d3"/><path d="M495 135 l4 4 7 -8" stroke="#fff" stroke-width="2" fill="none" class="a d3"/>
+      <rect x="94" y="162" width="432" height="38" rx="6" fill="#1B3471" class="a d4"/>
+      <text x="108" y="180" fill="#F2EAD9" class="a d4">Contrôle libre — à toute étape, par toute l'équipe</text>
+      <text x="108" y="193" fill="#5A9BD8" font-size="9" class="a d4">depuis l'écran d'atelier, sans changer l'étape : pointer, cliquer, signer</text>
+      <circle cx="500" cy="181" r="10" fill="#5CB85C" class="a d5"/><path d="M495 181 l4 4 7 -8" stroke="#fff" stroke-width="2" fill="none" class="a d5"/>
+    </g>
+    <text x="94" y="240" fill="#F2EAD9" opacity=".75" font-size="11" class="a d6">Chaque contrôle est horodaté et signé — visible dans l'historique de la fiche.</text>
+  </svg></div>
+</section>
+
+<!-- ═ SCÈNE · ESSAYAGE ═ -->
+<section class="scene">
+  <h2>6 · L'essayage patient<small>conforme → fabrication définitive</small></h2>
   <div class="visuel"><svg viewBox="0 0 620 300">
     <circle cx="180" cy="110" r="16" fill="#F2EAD9" class="a"/>
     <path d="M152 168 q28 -34 56 0 v60 h-56 z" fill="#F2EAD9" class="a"/>
@@ -189,9 +241,44 @@ body{background:var(--bg);color:var(--text);font:16px/1.5 -apple-system,BlinkMac
   </svg></div>
 </section>
 
-<!-- ═ SCÈNE 6 · MISE EN LIVRAISON ═ -->
+<!-- ═ SCÈNE · SUIVI À DISTANCE ═ -->
 <section class="scene">
-  <h2>5 · La mise en livraison<small>numéro unique et définitif + QR code</small></h2>
+  <h2>7 · Suivre l'atelier, même en déplacement<small>un même dossier, deux regards</small></h2>
+  <div class="visuel"><svg viewBox="0 0 620 320">
+    <rect x="60" y="30" width="150" height="260" rx="20" fill="#15295A" stroke="#5A9BD8" stroke-width="2"/>
+    <text x="135" y="60" text-anchor="middle" fill="#F2EAD9" font-size="11" font-weight="700">🩺 Mes fiches</text>
+    <g font-size="9">
+      <rect x="76" y="74" width="118" height="44" rx="6" fill="#1B3471" class="a"/>
+      <text x="84" y="90" fill="#F2EAD9" font-size="10" class="a">Jean D. · releveur</text>
+      <rect x="84" y="98" width="102" height="6" rx="3" fill="#0F1F47" class="a"/>
+      <rect x="84" y="98" width="64" height="6" rx="3" fill="#5CB85C" class="a d1"/>
+      <text x="84" y="114" fill="#5CB85C" class="a d1">étape 5/8 · essayage</text>
+      <rect x="76" y="128" width="118" height="44" rx="6" fill="#1B3471" opacity=".6" class="a d2"/>
+      <text x="84" y="144" fill="#F2EAD9" font-size="10" class="a d2">Marie L. · corset</text>
+      <rect x="84" y="152" width="102" height="6" rx="3" fill="#0F1F47" class="a d2"/>
+      <rect x="84" y="152" width="28" height="6" rx="3" fill="#E8C547" class="a d2"/>
+      <text x="84" y="168" fill="#E8C547" class="a d2">étape 2/8 · rectification</text>
+    </g>
+    <text x="135" y="276" text-anchor="middle" fill="#F2EAD9" opacity=".6" font-size="10" class="a d2">📍 en tournée, à l'hôpital…</text>
+    <g class="a d3">
+      <path d="M230 150 q40 -34 80 0" stroke="#5CB85C" stroke-width="2.5" fill="none" stroke-dasharray="6 6"/>
+      <path d="M310 170 q-40 34 -80 0" stroke="#5A9BD8" stroke-width="2.5" fill="none" stroke-dasharray="6 6"/>
+      <text x="270" y="136" text-anchor="middle" fill="#5CB85C" font-size="10">temps réel</text>
+    </g>
+    <rect x="330" y="60" width="250" height="190" rx="10" fill="#15295A" stroke="#5A9BD8" stroke-width="1.5" class="a d3"/>
+    <text x="350" y="88" fill="#F2EAD9" font-size="12" font-weight="700" class="a d3">🏭 L'atelier voit arriver</text>
+    <text x="350" y="106" fill="#F2EAD9" font-size="12" font-weight="700" class="a d3">les demandes patients</text>
+    <rect x="350" y="120" width="210" height="34" rx="6" fill="#234190" stroke="#E8743B" class="glisse"/>
+    <text x="360" y="141" fill="#F2EAD9" font-size="10" class="glisse">＋ Lucas B. · attelle — reçu à l'instant</text>
+    <text x="350" y="186" fill="#F2EAD9" opacity=".7" font-size="10" class="a d5">→ regard externe : l'applicateur suit l'avancée</text>
+    <text x="350" y="206" fill="#F2EAD9" opacity=".7" font-size="10" class="a d5">→ regard interne : l'atelier anticipe la charge</text>
+    <text x="350" y="234" fill="#5CB85C" font-size="11" font-weight="700" class="a d6">zéro appel téléphonique</text>
+  </svg></div>
+</section>
+
+<!-- ═ SCÈNE · MISE EN LIVRAISON ═ -->
+<section class="scene">
+  <h2>8 · La mise en livraison<small>numéro unique et définitif + QR code</small></h2>
   <div class="visuel"><svg viewBox="0 0 620 320">
     <rect x="110" y="20" width="400" height="280" rx="12" fill="#15295A" stroke="#5A9BD8" stroke-width="1.5"/>
     <text x="134" y="56" fill="#F2EAD9" font-size="14" font-weight="700">📦 Mise en livraison — Jean D.</text>
@@ -219,7 +306,7 @@ body{background:var(--bg);color:var(--text);font:16px/1.5 -apple-system,BlinkMac
 
 <!-- ═ SCÈNE 7 · SECRÉTARIAT ═ -->
 <section class="scene">
-  <h2>6 · Au secrétariat : le numéro rejoint le dossier<small>plus de courses à l'atelier</small></h2>
+  <h2>9 · Au secrétariat : le numéro rejoint le dossier<small>plus de courses à l'atelier</small></h2>
   <div class="visuel"><svg viewBox="0 0 620 300">
     <rect x="90" y="16" width="440" height="268" rx="10" fill="#15295A" stroke="#5A9BD8" stroke-width="1.5"/>
     <text x="114" y="48" fill="#F2EAD9" font-size="13" font-weight="700">🏷 Numéros de fabrication</text>
@@ -243,7 +330,7 @@ body{background:var(--bg);color:var(--text);font:16px/1.5 -apple-system,BlinkMac
 
 <!-- ═ SCÈNE 8 · LA SORTIE ═ -->
 <section class="scene">
-  <h2>7 · Jean repart appareillé<small>le QR code le suit</small></h2>
+  <h2>10 · Jean repart appareillé<small>le QR code le suit</small></h2>
   <div class="visuel"><svg viewBox="0 0 620 300">
     <line x1="40" y1="248" x2="580" y2="248" stroke="#F2EAD9" stroke-opacity=".18" stroke-width="2"/>
     <g class="marche">
@@ -302,24 +389,33 @@ const NARRATIONS = [
   "Voici Track-Op. Suivez Jean, et son appareil, de la prise de mesure jusqu'à la livraison.",
   "Tout commence en tournée. L'applicateur crée la fiche sur son téléphone, en trente secondes, au chevet du patient.",
   "La fiche apparaît aussitôt sur le planning de l'atelier. Chacun voit qui fait quoi, et pour quand. Les urgences remontent toutes seules.",
-  "À l'atelier, l'écran mural affiche le travail en cours. Une étape terminée ? On clique sa fiche, on clique l'étape, on signe de ses initiales. C'est validé, c'est tracé.",
+  "Chaque appareil a son barème de temps. Un dossier plus complexe ? On ajuste les heures sur la fiche. Et la charge de l'équipe se recalcule aussitôt.",
+  "À l'atelier, l'écran mural affiche le travail en cours. Une étape terminée ? On clique sa fiche. On clique l'étape. On signe de ses initiales. C'est validé, c'est tracé.",
+  "À chaque étape sensible, un contrôle. La sortie de mesures est confirmée par l'applicateur. La rectification exige son contrôle croisé. Et chacun peut enregistrer un contrôle qualité, à tout moment. Qui, quoi, quand : tout est tracé.",
   "Jean vient essayer son appareil. Conforme ? Direction la fabrication définitive : finitions, garniture, préparation.",
+  "En tournée, à l'hôpital, en déplacement : l'applicateur suit l'avancée de ses fiches, en temps réel. Et l'atelier voit arriver les demandes des patients. Un même dossier, deux regards. Zéro appel téléphonique.",
   "À la mise en livraison, Track-Op attribue un numéro de fabrication unique et définitif, et génère le QR code à coller sur l'appareil.",
   "Au secrétariat, fini les allers-retours : la liste des numéros à reporter est prête. On reporte, on coche, le dossier est complet.",
   "Jean repart appareillé. En scannant le QR code, il retrouve le mode d'emploi et les coordonnées de son atelier.",
   "Track-Op ne change pas vos habitudes : il rend l'atelier lisible. Et tout se personnalise, jusqu'au vocabulaire de votre métier. Demandez une démonstration."
 ];
+// La voix de synthèse écorche « Track-Op » (T-R-A-C-K… O… P) : on lui donne
+// une orthographe phonétique, SANS toucher aux sous-titres affichés.
+function texteParle(t){ return t.replace(/Track-Op/gi, 'Trakope'); }
 const scenes = [...document.querySelectorAll('.scene')];
 const st = document.getElementById('soustitre');
 const barre = document.querySelector('#barre i');
 const compteur = document.getElementById('compteur');
 const bPlay = document.getElementById('bPlay');
 const bSon = document.getElementById('bSon');
-let i = 0, lecture = false, son = true, timer = null, voixFr = null;
+let i = 0, lecture = false, son = true, timer = null, timerCeinture = null, voixFr = null;
 
 function chargerVoix(){
   const v = speechSynthesis.getVoices().filter(x => x.lang && x.lang.startsWith('fr'));
-  voixFr = v.find(x => /thomas|am[ée]lie|audrey|google/i.test(x.name)) || v[0] || null;
+  voixFr = v.find(x => /premium|enhanced|am[ée]lior/i.test(x.name))   // voix de qualité (macOS/iOS)
+        || v.find(x => /audrey|am[ée]lie|thomas/i.test(x.name))        // bonnes voix Apple standard
+        || v.find(x => /google/i.test(x.name))                          // Chrome
+        || v[0] || null;
 }
 if ('speechSynthesis' in window){ chargerVoix(); speechSynthesis.onvoiceschanged = chargerVoix; }
 
@@ -335,7 +431,7 @@ function montrer(n, animer = true){
 }
 
 function direEtEnchainer(){
-  clearTimeout(timer);
+  clearTimeout(timer); clearTimeout(timerCeinture);
   if ('speechSynthesis' in window) speechSynthesis.cancel();
   if (!lecture) return;
   const txt = NARRATIONS[i];
@@ -346,19 +442,28 @@ function direEtEnchainer(){
     else { lecture = false; bPlay.textContent = '↻'; } // fin du film
   };
   if (son && 'speechSynthesis' in window && voixFr !== undefined){
-    const u = new SpeechSynthesisUtterance(txt);
-    u.lang = 'fr-FR'; if (voixFr) u.voice = voixFr; u.rate = 1.02;
-    u.onend = () => { timer = setTimeout(suivant, 900); };
-    u.onerror = () => { timer = setTimeout(suivant, dureeLecture(txt)); };
-    speechSynthesis.speak(u);
-    timer = setTimeout(suivant, dureeLecture(txt) + 9000); // ceinture si onend ne vient jamais
+    // Phrase par phrase : la synthèse respecte mal la ponctuation d'un bloc —
+    // on découpe aux . ! ? : et on marque une vraie pause entre chaque phrase.
+    const phrases = texteParle(txt).split(/(?<=[.!?:])\s+/).filter(p => p.trim());
+    let p = 0;
+    const direPhrase = () => {
+      if (!lecture || son === false) return;
+      if (p >= phrases.length){ timer = setTimeout(suivant, 1000); return; }
+      const u = new SpeechSynthesisUtterance(phrases[p++]);
+      u.lang = 'fr-FR'; if (voixFr) u.voice = voixFr; u.rate = 1.0; u.pitch = 1.0;
+      u.onend = () => { timer = setTimeout(direPhrase, 320); };
+      u.onerror = () => { timer = setTimeout(direPhrase, 600); };
+      speechSynthesis.speak(u);
+    };
+    direPhrase();
+    timerCeinture = setTimeout(suivant, dureeLecture(txt) + 14000); // ceinture si la synthèse se tait
   } else {
     timer = setTimeout(suivant, dureeLecture(txt));
   }
 }
 
 function jouer(){ lecture = true; bPlay.textContent = '❚❚'; direEtEnchainer(); }
-function pause(){ lecture = false; bPlay.textContent = '▶'; clearTimeout(timer); if ('speechSynthesis' in window) speechSynthesis.cancel(); }
+function pause(){ lecture = false; bPlay.textContent = '▶'; clearTimeout(timer); clearTimeout(timerCeinture); if ('speechSynthesis' in window) speechSynthesis.cancel(); }
 
 bPlay.onclick = () => { if (lecture) pause(); else { if (bPlay.textContent === '↻') montrer(0); jouer(); } };
 document.getElementById('bPrec').onclick = () => { pause(); montrer(i-1); };
