@@ -64,7 +64,7 @@ body{background:var(--bg);color:var(--text);font:16px/1.5 -apple-system,BlinkMac
 </style>
 </head>
 <body>
-<div class="version">Track-Op · visite 1.1.00</div>
+<div class="version">Track-Op · visite 1.2.00</div>
 
 <!-- ═══════════ ÉCRAN D'OUVERTURE ═══════════ -->
 <div id="ouverture">
@@ -430,9 +430,13 @@ function montrer(n, animer = true){
   compteur.textContent = (i+1) + ' / ' + scenes.length;
 }
 
+// Narration enregistrée : un MP3 par scène (voix IA Piper, /visite/audio/).
+// La synthèse du navigateur ne sert plus que de repli si un fichier manque.
+const lecteurAudio = new Audio();
 function direEtEnchainer(){
   clearTimeout(timer); clearTimeout(timerCeinture);
   if ('speechSynthesis' in window) speechSynthesis.cancel();
+  lecteurAudio.onended = lecteurAudio.onerror = null; lecteurAudio.pause();
   if (!lecture) return;
   const txt = NARRATIONS[i];
   let suivantLance = false;
@@ -441,6 +445,17 @@ function direEtEnchainer(){
     if (i < scenes.length - 1){ montrer(i+1); direEtEnchainer(); }
     else { lecture = false; bPlay.textContent = '↻'; } // fin du film
   };
+  if (son){
+    lecteurAudio.src = 'audio/scene-' + (i+1) + '.mp3';
+    lecteurAudio.onended = () => { timer = setTimeout(suivant, 800); };
+    lecteurAudio.onerror = () => repliSynthese(txt, suivant);
+    lecteurAudio.play().catch(() => repliSynthese(txt, suivant));
+    timerCeinture = setTimeout(suivant, dureeLecture(txt) + 16000); // ceinture
+    return;
+  }
+  timer = setTimeout(suivant, dureeLecture(txt)); // mode silencieux
+}
+function repliSynthese(txt, suivant){
   if (son && 'speechSynthesis' in window && voixFr !== undefined){
     // Phrase par phrase : la synthèse respecte mal la ponctuation d'un bloc —
     // on découpe aux . ! ? : et on marque une vraie pause entre chaque phrase.
@@ -456,14 +471,13 @@ function direEtEnchainer(){
       speechSynthesis.speak(u);
     };
     direPhrase();
-    timerCeinture = setTimeout(suivant, dureeLecture(txt) + 14000); // ceinture si la synthèse se tait
   } else {
     timer = setTimeout(suivant, dureeLecture(txt));
   }
 }
 
 function jouer(){ lecture = true; bPlay.textContent = '❚❚'; direEtEnchainer(); }
-function pause(){ lecture = false; bPlay.textContent = '▶'; clearTimeout(timer); clearTimeout(timerCeinture); if ('speechSynthesis' in window) speechSynthesis.cancel(); }
+function pause(){ lecture = false; bPlay.textContent = '▶'; clearTimeout(timer); clearTimeout(timerCeinture); lecteurAudio.pause(); if ('speechSynthesis' in window) speechSynthesis.cancel(); }
 
 bPlay.onclick = () => { if (lecture) pause(); else { if (bPlay.textContent === '↻') montrer(0); jouer(); } };
 document.getElementById('bPrec').onclick = () => { pause(); montrer(i-1); };
