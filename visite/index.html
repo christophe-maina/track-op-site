@@ -64,7 +64,7 @@ body{background:var(--bg);color:var(--text);font:16px/1.5 -apple-system,BlinkMac
 </style>
 </head>
 <body>
-<div class="version">Track-Op · visite 1.2.00</div>
+<div class="version">Track-Op · visite 1.2.01</div>
 
 <!-- ═══════════ ÉCRAN D'OUVERTURE ═══════════ -->
 <div id="ouverture">
@@ -431,43 +431,54 @@ function montrer(n, animer = true){
 }
 
 // Narration enregistrée : un MP3 par scène (voix IA Piper, /visite/audio/).
-// La synthèse du navigateur ne sert plus que de repli si un fichier manque.
+// JETON DE GÉNÉRATION (gen) : chaque appel l'incrémente ; tout callback d'une
+// scène devenue obsolète (audio fini, minuterie, synthèse) se compare à gen et
+// ne fait rien s'il est périmé. C'est ce qui empêche les sons de se superposer.
 const lecteurAudio = new Audio();
-function direEtEnchainer(){
+lecteurAudio.preload = 'auto';
+let gen = 0;
+function stopTout(){
   clearTimeout(timer); clearTimeout(timerCeinture);
   if ('speechSynthesis' in window) speechSynthesis.cancel();
-  lecteurAudio.onended = lecteurAudio.onerror = null; lecteurAudio.pause();
+  lecteurAudio.onended = lecteurAudio.onerror = null;
+  try { lecteurAudio.pause(); } catch(e){}
+}
+function direEtEnchainer(){
+  const moi = ++gen;            // cette scène possède le jeton
+  stopTout();
   if (!lecture) return;
   const txt = NARRATIONS[i];
-  let suivantLance = false;
+  let avance = false;
   const suivant = () => {
-    if (suivantLance || !lecture) return; suivantLance = true;
+    if (avance || moi !== gen || !lecture) return; avance = true;
     if (i < scenes.length - 1){ montrer(i+1); direEtEnchainer(); }
     else { lecture = false; bPlay.textContent = '↻'; } // fin du film
   };
-  if (son){
-    lecteurAudio.src = 'audio/scene-' + (i+1) + '.mp3';
-    lecteurAudio.onended = () => { timer = setTimeout(suivant, 800); };
-    lecteurAudio.onerror = () => repliSynthese(txt, suivant);
-    lecteurAudio.play().catch(() => repliSynthese(txt, suivant));
-    timerCeinture = setTimeout(suivant, dureeLecture(txt) + 16000); // ceinture
-    return;
-  }
-  timer = setTimeout(suivant, dureeLecture(txt)); // mode silencieux
+  if (!son){ timer = setTimeout(suivant, dureeLecture(txt)); return; } // muet
+  // Voix enregistrée. Le repli synthèse n'arrive QUE si le MP3 ne se lit pas,
+  // et au plus une fois (jamais par-dessus un audio qui fonctionne).
+  let repliFait = false;
+  const repli = () => { if (repliFait || moi !== gen) return; repliFait = true; repliSynthese(txt, suivant, moi); };
+  lecteurAudio.onended = () => { if (moi === gen) timer = setTimeout(suivant, 700); };
+  lecteurAudio.onerror = repli;
+  lecteurAudio.src = 'audio/scene-' + (i+1) + '.mp3';
+  lecteurAudio.play().then(() => {
+    if (moi !== gen) return;   // scène déjà changée pendant le chargement
+    const d = isFinite(lecteurAudio.duration) && lecteurAudio.duration ? lecteurAudio.duration*1000 : dureeLecture(txt);
+    timerCeinture = setTimeout(suivant, d + 8000); // ceinture si onended manque
+  }).catch(() => repli());
 }
-function repliSynthese(txt, suivant){
-  if (son && 'speechSynthesis' in window && voixFr !== undefined){
-    // Phrase par phrase : la synthèse respecte mal la ponctuation d'un bloc —
-    // on découpe aux . ! ? : et on marque une vraie pause entre chaque phrase.
+function repliSynthese(txt, suivant, moi){
+  if ('speechSynthesis' in window && voixFr !== undefined){
     const phrases = texteParle(txt).split(/(?<=[.!?:])\s+/).filter(p => p.trim());
     let p = 0;
     const direPhrase = () => {
-      if (!lecture || son === false) return;
+      if (moi !== gen || !lecture || !son) return;
       if (p >= phrases.length){ timer = setTimeout(suivant, 1000); return; }
       const u = new SpeechSynthesisUtterance(phrases[p++]);
-      u.lang = 'fr-FR'; if (voixFr) u.voice = voixFr; u.rate = 1.0; u.pitch = 1.0;
-      u.onend = () => { timer = setTimeout(direPhrase, 320); };
-      u.onerror = () => { timer = setTimeout(direPhrase, 600); };
+      u.lang = 'fr-FR'; if (voixFr) u.voice = voixFr; u.rate = 1.0;
+      u.onend = () => { if (moi === gen) timer = setTimeout(direPhrase, 300); };
+      u.onerror = () => { if (moi === gen) timer = setTimeout(direPhrase, 500); };
       speechSynthesis.speak(u);
     };
     direPhrase();
@@ -477,7 +488,7 @@ function repliSynthese(txt, suivant){
 }
 
 function jouer(){ lecture = true; bPlay.textContent = '❚❚'; direEtEnchainer(); }
-function pause(){ lecture = false; bPlay.textContent = '▶'; clearTimeout(timer); clearTimeout(timerCeinture); lecteurAudio.pause(); if ('speechSynthesis' in window) speechSynthesis.cancel(); }
+function pause(){ lecture = false; bPlay.textContent = '▶'; gen++; stopTout(); } // gen++ neutralise les callbacks en vol
 
 bPlay.onclick = () => { if (lecture) pause(); else { if (bPlay.textContent === '↻') montrer(0); jouer(); } };
 document.getElementById('bPrec').onclick = () => { pause(); montrer(i-1); };
