@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Track-Op — Le planning clair, d'un coup d'œil">
 <meta property="og:description" content="Logiciel de planification pour ateliers d'orthopédie. Installation locale, vos données patients restent chez vous.">
-<meta property="og:image" content="assets/ecosystem-real.jpg">
+<meta property="og:image" content="assets/packshot-trackop.jpg">
 <meta property="og:url" content="https://track-op.fr">
 <meta property="og:site_name" content="Track-Op">
 <meta property="og:locale" content="fr_FR">
@@ -21,7 +21,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Track-Op — Le planning clair, d'un coup d'œil">
 <meta name="twitter:description" content="Le planning d'atelier pour orthopédie. Vos données restent chez vous.">
-<meta name="twitter:image" content="assets/ecosystem-real.jpg">
+<meta name="twitter:image" content="assets/packshot-trackop.jpg">
 
 <!-- Marque déposée -->
 <meta name="author" content="C-Ter Studio">
@@ -228,6 +228,23 @@ img{max-width:100%;display:block;}
   text-transform:uppercase;
 }
 .trust-strip strong{color:var(--text-soft);font-weight:500;}
+
+/* ════ RÉFÉRENCE & TÉMOIGNAGE ════ */
+.ref-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center;margin-top:56px;}
+.ref-pack{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line-strong);
+  box-shadow:0 30px 80px rgba(0,0,0,0.5),0 0 80px var(--glow-orange);}
+.ref-pack img{width:100%;display:block;}
+.ref-quote{position:relative;}
+.ref-badge{display:inline-block;font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--orange,#E8743B);border:1px solid var(--line-strong);
+  border-radius:30px;padding:6px 14px;margin-bottom:22px;}
+.ref-quote blockquote{margin:0 0 22px;font-size:clamp(18px,2.3vw,23px);line-height:1.5;
+  font-weight:500;color:var(--text);}
+.ref-quote figcaption{font-size:14px;line-height:1.6;color:var(--text-mute);}
+.ref-quote figcaption strong{color:var(--text-soft);}
+.ref-quote figcaption a{color:var(--blue-bright,#5A9BD8);text-decoration:none;}
+.ref-quote figcaption a:hover{text-decoration:underline;}
+@media(max-width:860px){.ref-grid{grid-template-columns:1fr;gap:32px;}}
 
 /* ════ PROMISE — clé ════ */
 .promise{
@@ -596,6 +613,7 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
     <a href="#demo">Démo</a>
     <a href="#how">Comment ça marche</a>
     <a href="#data">Vos données</a>
+    <a href="#reference">Références</a>
     <a href="#prereq">Prérequis</a>
   </div>
   <a href="#contact" class="nav-cta">Demander une démo →</a>
@@ -627,7 +645,7 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
     </div>
 
     <div class="hero-visual reveal">
-      <img src="assets/ecosystem-real.jpg" alt="Track-Op : écran mural, poste de travail, mobile">
+      <img src="assets/packshot-trackop.jpg" alt="Track-Op — la suite complète des orthoprothésistes et podo-orthésistes : fabrication, stock, finance">
     </div>
 
     <div class="trust-strip reveal">
@@ -921,6 +939,35 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
         <div class="lbl">06 · À venir</div>
         <div class="name">VOP : la fiche numérique</div>
         <p>L'application VOP numérisera la fiche d'appareil (mesures, suivi) sur tablette/mobile.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ RÉFÉRENCE & TÉMOIGNAGE ════ -->
+<section class="section ref-section" id="reference">
+  <div class="section-inner">
+    <div class="eyebrow reveal">07 — Ils utilisent Track-Op</div>
+    <h2 class="section-title reveal d1">
+      En production, <span class="accent">tous les jours.</span>
+    </h2>
+    <p class="section-sub reveal d2">
+      Track-Op n'est pas une maquette : la suite tourne en atelier, sur des appareils réels, du premier rendez-vous à la livraison.
+    </p>
+
+    <div class="ref-grid reveal">
+      <figure class="ref-pack">
+        <img src="assets/packshot-trackop.jpg" alt="La suite Track-Op : fabrication, stock, finance">
+      </figure>
+      <div class="ref-quote">
+        <div class="ref-badge">CLIENT DE RÉFÉRENCE</div>
+        <blockquote>
+          « Track-Op a rendu notre atelier lisible. En un coup d'œil, chacun sait où en est chaque appareil, du premier rendez-vous à la livraison. Le numéro de fabrication fait enfin le pont avec le dossier administratif, et nous suivons l'avancée des fiches même en déplacement. Surtout, il ne nous a pas imposé de changer nos habitudes : nos fiches sont restées les nôtres. »
+        </blockquote>
+        <figcaption>
+          <strong>Ortho Espace 3D</strong> — Rémire-Montjoly, Guyane<br>
+          <a href="https://orthoespace3d.fr" target="_blank" rel="noopener">orthoespace3d.fr</a>
+        </figcaption>
       </div>
     </div>
   </div>
