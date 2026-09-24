@@ -343,7 +343,7 @@ img{max-width:100%;display:block;}
   box-shadow:0 30px 80px rgba(0,0,0,0.5), 0 0 60px var(--glow-blue);
 }
 .carousel-track{display:flex;transition:transform .6s cubic-bezier(0.65, 0, 0.35, 1);will-change:transform;}
-.carousel-slide{flex:0 0 100%;display:flex;align-items:center;justify-content:center;aspect-ratio:4/3;background:#0E1B3D;overflow:hidden;}
+.carousel-slide{flex:0 0 100%;display:flex;align-items:center;justify-content:center;aspect-ratio:16/10;background:#0E1B3D;overflow:hidden;}
 .carousel-slide img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;}
 .carousel-meta{
   padding:32px 40px;
@@ -366,6 +366,10 @@ img{max-width:100%;display:block;}
 
 /* ════ COMMENT ÇA MARCHE — bento ════ */
 .how{}
+.news-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:56px;}
+@media (max-width:980px){.news-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:640px){.news-grid{grid-template-columns:1fr;}}
+.news-cta{display:flex;flex-wrap:wrap;gap:16px 24px;align-items:center;margin-top:40px;color:var(--text-soft);font-size:15px;}
 .how-grid{
   display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:minmax(220px,auto);gap:16px;
   margin-top:72px;
@@ -642,6 +646,8 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
   </a>
   <div class="nav-links">
     <a href="#demo">Démo</a>
+    <a href="#nouveautes">Nouveautés</a>
+    <a href="presentation/">Présentation</a>
     <a href="#how">Comment ça marche</a>
     <a href="#video">Vidéo</a>
     <a href="#data">Vos données</a>
@@ -734,21 +740,27 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
     <div class="carousel reveal" id="carousel">
       <div class="carousel-frame">
         <div class="carousel-track" id="carouselTrack">
-          <div class="carousel-slide"><img src="assets/carousel-1.png" alt="Écran mural Track-Op"></div>
-          <div class="carousel-slide"><img src="assets/carousel-2.png" alt="Poste de travail Track-Op"></div>
-          <div class="carousel-slide"><img src="assets/carousel-3.png" alt="App mobile Track-Op"></div>
+          <div class="carousel-slide"><img src="assets/app-ecran.jpg" alt="Écran d'atelier Track-Op : une colonne par membre de l'équipe"></div>
+          <div class="carousel-slide"><img src="assets/app-accueil.jpg" alt="Accueil du planning : bandeaux, compteurs et charge de l'équipe" loading="lazy"></div>
+          <div class="carousel-slide"><img src="assets/app-charge.jpg" alt="Charge de l'équipe avec le détail des appareils d'un technicien" loading="lazy"></div>
+          <div class="carousel-slide"><img src="assets/app-validation.jpg" alt="Validation d'une étape à la télécommande : qui valide ?" loading="lazy"></div>
+          <div class="carousel-slide"><img src="assets/app-frise.jpg" alt="Frise d'avancement des appareils sur les huit étapes" loading="lazy"></div>
+          <div class="carousel-slide"><img src="assets/app-mobile.jpg" alt="Saisie mobile de l'applicateur" loading="lazy"></div>
         </div>
         <div class="carousel-meta">
           <div class="carousel-meta-left">
-            <div class="label" id="slideLabel">01 — L'écran mural</div>
+            <div class="label" id="slideLabel">01 — L'écran d'atelier</div>
             <h3 id="slideTitle">L'atelier en un coup d'œil</h3>
-            <p id="slideDesc">Une télévision grand format affiche le planning de fabrication en temps réel. Coloré, lisible à distance, mis à jour sans intervention. Toute l'équipe voit où en est chaque appareil.</p>
+            <p id="slideDesc">Une télévision ou un simple écran affiche le planning en temps réel : une vue d'ensemble, puis une page par personne, qui défilent seules. Toute l'équipe voit où en est chaque appareil.</p>
           </div>
           <div class="carousel-controls">
             <div class="carousel-dots" id="carouselDots">
-              <button class="active" data-slide="0" aria-label="Slide 1"></button>
-              <button data-slide="1" aria-label="Slide 2"></button>
-              <button data-slide="2" aria-label="Slide 3"></button>
+              <button class="active" data-slide="0" aria-label="Vue 1"></button>
+              <button data-slide="1" aria-label="Vue 2"></button>
+              <button data-slide="2" aria-label="Vue 3"></button>
+              <button data-slide="3" aria-label="Vue 4"></button>
+              <button data-slide="4" aria-label="Vue 5"></button>
+              <button data-slide="5" aria-label="Vue 6"></button>
             </div>
             <button class="carousel-arrow" id="arrowPrev" aria-label="Précédent">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -763,10 +775,53 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
   </div>
 </section>
 
+<!-- ════ NOUVEAUTÉS 2026 (site 1.6.00) ════ -->
+<section class="section news" id="nouveautes">
+  <div class="section-inner">
+    <div class="eyebrow reveal">02 — Les nouveautés</div>
+    <h2 class="section-title reveal d1">
+      Ce que l'atelier a demandé, <span class="accent">livré.</span>
+    </h2>
+    <p class="section-sub reveal d2">
+      Chaque évolution de Track-Op naît d'une demande de l'équipe d'Ortho Espace 3D, testée à l'atelier avant d'être livrée. Voici celles de 2026.
+    </p>
+    <div class="news-grid reveal">
+      <div class="how-card">
+        <h3>La charge, heure par heure</h3>
+        <p>Pour chaque personne : les heures qui restent en rectification, fabrication et finitions, le rythme à tenir et la <strong>marge avant l'échéance la plus serrée</strong>. Absences et jours d'école déduits.</p>
+      </div>
+      <div class="how-card">
+        <h3>Des alertes avant le problème</h3>
+        <p><strong>Prêt la veille</strong> du rendez-vous, retards, fiches <strong>sans nouvelles depuis plusieurs jours</strong>, appareils en essai chez le patient, fiches sans technicien, départ de l'alternant à l'école.</p>
+      </div>
+      <div class="how-card">
+        <h3>Le pont vers le secrétariat</h3>
+        <p>À la livraison, chaque appareil reçoit son <strong>numéro de fabrication</strong> et son QR code de traçabilité. Le secrétariat retrouve tous les numéros sur une page dédiée et coche ceux reportés au dossier client.</p>
+      </div>
+      <div class="how-card">
+        <h3>Valider à la télécommande</h3>
+        <p>Trois touches suffisent pour faire avancer une étape depuis l'écran d'atelier : la fiche, l'issue, <strong>qui valide</strong>. Le contrôle qualité s'intercale quand l'étape le demande.</p>
+      </div>
+      <div class="how-card">
+        <h3>Des accès personnels</h3>
+        <p>Un compte par personne, des <strong>postes approuvés</strong> par l'administrateur, une session qui se ferme seule sur les postes partagés, et des droits qui suivent les rôles.</p>
+      </div>
+      <div class="how-card">
+        <h3>L'alternance, prévue</h3>
+        <p>Un rôle à part entière : présence lue dans l'agenda de l'école, travail confié par un applicateur, et un rappel la veille de ce qui reste à son nom.</p>
+      </div>
+    </div>
+    <div class="news-cta reveal">
+      <a href="presentation/" class="btn btn-primary">Voir la présentation complète <span class="arrow">→</span></a>
+      <span>Chaque écran, capture à l'appui, sur un atelier de démonstration.</span>
+    </div>
+  </div>
+</section>
+
 <!-- ════ COMMENT ÇA MARCHE — bento ════ -->
 <section class="section how" id="how">
   <div class="section-inner">
-    <div class="eyebrow reveal">02 — Comment ça marche</div>
+    <div class="eyebrow reveal">03 — Comment ça marche</div>
     <h2 class="section-title reveal d1">
       Une couche <span class="accent">par-dessus</span> votre atelier.
     </h2>
@@ -824,7 +879,7 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
 <!-- ════ RÔLES ════ -->
 <section class="section roles-section">
   <div class="section-inner">
-    <div class="eyebrow reveal">03 — La chaîne</div>
+    <div class="eyebrow reveal">04 — La chaîne</div>
     <h2 class="section-title reveal d1">
       Track-Op épouse <span class="accent">la réalité</span> de l'atelier.
     </h2>
@@ -861,7 +916,7 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
 <!-- ════ DATA STAY HOME ════ -->
 <section class="section data-stay" id="data">
   <div class="section-inner">
-    <div class="eyebrow reveal">04 — Vos données</div>
+    <div class="eyebrow reveal">05 — Vos données</div>
     <div class="data-stay-grid">
       <div class="data-stay-text reveal">
         <h2>Vos données <em>restent vos données.</em></h2>
@@ -900,7 +955,7 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
 <!-- ════ PRÉREQUIS ════ -->
 <section class="section prereq" id="prereq">
   <div class="section-inner">
-    <div class="eyebrow reveal">05 — Prérequis</div>
+    <div class="eyebrow reveal">06 — Prérequis</div>
     <h2 class="section-title reveal d1">
       Ce qu'il faut <span class="accent">prévoir</span> dans l'atelier.
     </h2>
@@ -952,7 +1007,7 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
 <!-- ════ C-TER PREND EN CHARGE ════ -->
 <section class="section">
   <div class="section-inner">
-    <div class="eyebrow reveal">06 — Ce que nous prenons en charge</div>
+    <div class="eyebrow reveal">07 — Ce que nous prenons en charge</div>
     <h2 class="section-title reveal d1">
       On s'occupe de tout, <span class="accent">vous gardez la main.</span>
     </h2>
@@ -998,7 +1053,7 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
 <!-- ════ RÉFÉRENCE & TÉMOIGNAGE ════ -->
 <section class="section ref-section" id="reference">
   <div class="section-inner">
-    <div class="eyebrow reveal">07 — Ils utilisent Track-Op</div>
+    <div class="eyebrow reveal">08 — Ils utilisent Track-Op</div>
     <h2 class="section-title reveal d1">
       En production, <span class="accent">tous les jours.</span>
     </h2>
@@ -1099,6 +1154,8 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
     <div class="footer-col">
       <h4>Produit</h4>
       <a href="#demo">Démo interactive</a>
+      <a href="#nouveautes">Nouveautés</a>
+      <a href="presentation/">Présentation complète</a>
       <a href="#how">Comment ça marche</a>
       <a href="#data">Vos données</a>
       <a href="#prereq">Prérequis</a>
@@ -1149,9 +1206,12 @@ const arrowPrev = document.getElementById('arrowPrev');
 const arrowNext = document.getElementById('arrowNext');
 
 const slides = [
-  { label: "01 — L'écran mural", title: "L'atelier en un coup d'œil", desc: "Une télévision grand format affiche le planning de fabrication en temps réel. Coloré, lisible à distance, mis à jour sans intervention. Toute l'équipe voit où en est chaque appareil." },
-  { label: '02 — Le poste de travail', title: 'Saisie, validation, suivi complet', desc: "L'interface du responsable des fabrications. Toutes les fiches en cours, filtres, statuts colorés, actions rapides. Pensé pour le quotidien de l'atelier." },
-  { label: "03 — L'application mobile", title: "Création de fiche en consultation", desc: "L'applicateur ouvre le parcours depuis son téléphone : prise de mesure, type d'appareil, rendez-vous. Synchro instantanée avec les autres supports." }
+  { label: "01 — L'écran d'atelier", title: "L'atelier en un coup d'œil", desc: "Une télévision ou un simple écran affiche le planning en temps réel : une vue d'ensemble, puis une page par personne, qui défilent seules. Toute l'équipe voit où en est chaque appareil." },
+  { label: "02 — L'accueil", title: "La journée en un coup d'œil", desc: "Appareils en essai chez le patient, fiches sans technicien, urgences, livraisons : tout ce qui demande une action du jour remonte à l'ouverture du planning." },
+  { label: "03 — La charge de l'équipe", title: "Ce qui reste à faire, heure par heure", desc: "Rectification, fabrication, finitions : chaque action compte pour sa propre échéance, absences déduites. OK, tendu ou surcharge, et un clic pour le détail des appareils." },
+  { label: "04 — La télécommande", title: "Valider sans quitter l'établi", desc: "On choisit la fiche, l'issue, puis qui valide, par ses initiales. Le geste est daté et signé ; le contrôle qualité s'intercale quand l'étape le demande." },
+  { label: "05 — La frise", title: "L'avancement de chaque appareil", desc: "Une ligne par appareil, un point sur les huit étapes, de la mesure à la livraison. Vue globale ou individuelle, au poste comme sur l'écran d'atelier." },
+  { label: "06 — La saisie mobile", title: "Création de fiche en consultation", desc: "L'applicateur ouvre le parcours depuis son téléphone, dès la prise de mesure. Le patient est pseudonymisé dès la saisie ; à l'atelier, la fiche est déjà là." }
 ];
 
 let current = 0, autoplay;
