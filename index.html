@@ -86,20 +86,24 @@ img{max-width:100%;display:block;}
 
 /* ════ NAV ════ */
 .bandeau-v2{position:fixed;top:0;left:0;right:0;z-index:110;background:var(--jaune);color:#0b222d;
-  overflow:hidden;padding:9px 44px 9px 0;font-size:14.5px;line-height:1.4}
+  overflow:hidden;padding:9px 44px 9px 0;font-size:14.5px;line-height:1.4;
+  animation:clignoteV2 1.8s ease-in-out infinite}
 .bandeau-piste{display:flex;width:max-content;animation:defileV2 26s linear infinite}
 .bandeau-v2:hover .bandeau-piste{animation-play-state:paused}
 .bandeau-lot{display:flex;align-items:center;gap:16px;padding-right:64px;white-space:nowrap}
 .bandeau-v2 b{font-family:var(--font-display);font-weight:800;letter-spacing:-.01em}
-.bandeau-v2 .pt{width:7px;height:7px;border-radius:50%;background:#0b222d;display:inline-block;flex:0 0 7px}
+.bandeau-v2 .pt{width:7px;height:7px;border-radius:50%;background:#0b222d;display:inline-block;flex:0 0 7px;animation:clignotePt 1.8s ease-in-out infinite}
 .bandeau-v2 a{color:#0b222d;font-weight:700;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
 .bandeau-v2 .fermer{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:var(--jaune);border:0;color:#0b222d;font-size:19px;line-height:1;cursor:pointer;padding:4px 9px;opacity:.7;z-index:2}
 .bandeau-v2 .fermer:hover{opacity:1}
-@keyframes defileV2{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@keyframes defileV2{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes clignoteV2{0%,100%{background:var(--jaune)}50%{background:#ffd98a}}
+@keyframes clignotePt{0%,100%{opacity:1}50%{opacity:.15}}
 body.sans-bandeau .bandeau-v2{display:none}
 body.sans-bandeau .nav{top:0}
 @media(max-width:700px){.bandeau-v2{font-size:13px;padding:8px 40px 8px 0}}
-@media(prefers-reduced-motion:reduce){.bandeau-piste{animation:none;justify-content:center;width:100%}.bandeau-lot:last-child{display:none}}
+@media(prefers-reduced-motion:reduce){.bandeau-v2,.bandeau-v2 .pt{animation:none}.bandeau-piste{animation:none;justify-content:center;width:100%}.bandeau-lot:last-child{display:none}}
+.bandeau-v2:hover{animation-play-state:paused}
 .nav{
   position:fixed;top:var(--h-bandeau,42px);left:0;right:0;z-index:100;
   padding:18px 32px;
