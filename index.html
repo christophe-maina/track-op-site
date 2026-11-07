@@ -86,16 +86,20 @@ img{max-width:100%;display:block;}
 
 /* ════ NAV ════ */
 .bandeau-v2{position:fixed;top:0;left:0;right:0;z-index:110;background:var(--jaune);color:#0b222d;
-  display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;
-  padding:9px 48px 9px 20px;font-size:14.5px;line-height:1.35;text-align:center}
+  overflow:hidden;padding:9px 44px 9px 0;font-size:14.5px;line-height:1.4}
+.bandeau-piste{display:flex;width:max-content;animation:defileV2 26s linear infinite}
+.bandeau-v2:hover .bandeau-piste{animation-play-state:paused}
+.bandeau-lot{display:flex;align-items:center;gap:16px;padding-right:64px;white-space:nowrap}
 .bandeau-v2 b{font-family:var(--font-display);font-weight:800;letter-spacing:-.01em}
-.bandeau-v2 .pt{width:7px;height:7px;border-radius:50%;background:#0b222d;display:inline-block;animation:pulseDot 2s ease-in-out infinite;flex:0 0 7px}
+.bandeau-v2 .pt{width:7px;height:7px;border-radius:50%;background:#0b222d;display:inline-block;flex:0 0 7px}
 .bandeau-v2 a{color:#0b222d;font-weight:700;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
-.bandeau-v2 .fermer{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:0;color:#0b222d;font-size:19px;line-height:1;cursor:pointer;padding:4px 8px;opacity:.65}
+.bandeau-v2 .fermer{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:var(--jaune);border:0;color:#0b222d;font-size:19px;line-height:1;cursor:pointer;padding:4px 9px;opacity:.7;z-index:2}
 .bandeau-v2 .fermer:hover{opacity:1}
+@keyframes defileV2{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 body.sans-bandeau .bandeau-v2{display:none}
 body.sans-bandeau .nav{top:0}
-@media(max-width:700px){.bandeau-v2{font-size:13px;padding:8px 42px 8px 14px}}
+@media(max-width:700px){.bandeau-v2{font-size:13px;padding:8px 40px 8px 0}}
+@media(prefers-reduced-motion:reduce){.bandeau-piste{animation:none;justify-content:center;width:100%}.bandeau-lot:last-child{display:none}}
 .nav{
   position:fixed;top:var(--h-bandeau,42px);left:0;right:0;z-index:100;
   padding:18px 32px;
@@ -700,10 +704,11 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
   <div class="nav-progress" id="navProgress"></div>
 </nav>
 
-<div class="bandeau-v2" id="bandeauV2">
-  <span class="pt" aria-hidden="true"></span>
-  <span><b>Version 2 · février 2027</b> — la feuille de mesures arrive sur la tablette, devant le patient.</span>
-  <a href="#v2">Voir ce qui arrive →</a>
+<div class="bandeau-v2" id="bandeauV2" role="region" aria-label="Annonce : version 2 en février 2027">
+  <div class="bandeau-piste">
+    <div class="bandeau-lot"><span class="pt" aria-hidden="true"></span><span><b>Version 2 · février 2027</b> — la feuille de mesures arrive sur la tablette, devant le patient.</span><a href="#v2">Voir ce qui arrive →</a></div>
+    <div class="bandeau-lot" aria-hidden="true"><span class="pt"></span><span><b>Version 2 · février 2027</b> — la feuille de mesures arrive sur la tablette, devant le patient.</span><a href="#v2" tabindex="-1">Voir ce qui arrive →</a></div>
+  </div>
   <button class="fermer" type="button" aria-label="Masquer l'annonce" onclick="document.body.classList.add('sans-bandeau');try{localStorage.setItem('bandeauV2','off')}catch(e){}">×</button>
 </div>
 <script>try{if(localStorage.getItem('bandeauV2')==='off')document.body.classList.add('sans-bandeau')}catch(e){}</script>
@@ -751,7 +756,7 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
     <div class="teaser-txt reveal">
       <span class="teaser-tag"><span class="pulse"></span>Février 2027 · version 2</span>
       <h2>La mesure <span class="accent">quitte le papier.</span></h2>
-      <p>On la prend sur la tablette, devant le patient. Le schéma de l'appareil s'affiche avec ses repères, la valeur se pose sur le dessin, et le dossier part à l'atelier avec sa feuille de travail. Dix-neuf types d'appareils, et chaque atelier règle ses propres feuilles.</p>
+      <p>On la prend sur la tablette, devant le patient. Le schéma s'affiche avec ses repères, la valeur se pose sur le dessin, et le dossier part à l'atelier avec sa feuille de travail. Les feuilles se règlent comme le reste du logiciel : chaque atelier compose les siennes, et personne ne travaille sur celles du voisin.</p>
       <a href="#nouveautes" class="btn btn-primary">Voir ce qui arrive <span class="arrow">→</span></a>
     </div>
     <figure class="teaser-img reveal d1">
@@ -855,9 +860,10 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
     <div class="v2-bloc reveal">
       <span class="v2-tag">Février 2027 · version 2</span>
       <h3 class="v2-titre">La feuille de mesures arrive sur la tablette.</h3>
-      <p class="v2-chapo">On prend les mesures devant le patient. Le schéma de l'appareil s'affiche avec ses repères, la valeur se pose sur le dessin, et le dossier part à l'atelier avec sa feuille de travail. Dix-neuf types d'appareils, de la prothèse tibiale au corset siège, pour les orthoprothésistes comme pour les podo-orthésistes.</p>
+      <p class="v2-chapo">On prend les mesures devant le patient. Le schéma s'affiche avec ses repères, la valeur se pose sur le dessin, et le dossier part à l'atelier avec sa feuille de travail. Les feuilles sont personnalisables au même titre que le logiciel : orthoprothèse et podo-orthèse sont deux métiers distincts, chacun compose les siennes.</p>
       <div class="v2-grid">
         <div class="v2-item"><h4>Vos feuilles, pas les nôtres</h4><p>Renommer une cote, changer son unité, en ajouter une, déplacer un repère sur le schéma, régler les adjonctions et leurs quantités. Rien n'est figé dans le logiciel.</p></div>
+        <div class="v2-item"><h4>Un logiciel protégé</h4><p>Track-Op est protégé par le droit d'auteur et la marque est déposée à l'INPI sous le n° 5260665. Vous travaillez sur un outil dont l'éditeur est identifié et engagé.</p></div>
         <div class="v2-item"><h4>Le suivi tient aussi sans atelier</h4><p>Fabrication sous-traitée : date d'envoi, retour attendu, ce qui est confié, délai dépassé signalé. Le dossier reste au planning pendant qu'il est dehors.</p></div>
         <div class="v2-item"><h4>Vos données restent chez vous</h4><p>Seule la fiche de planning est synchronisée. Les mesures et les photos restent sur l'appareil qui les a prises.</p></div>
         <div class="v2-item"><h4>Reprise intégrale</h4><p>À la mise à niveau, tous vos fichiers et toutes vos bases sont repris. Aucune ressaisie, et rien ne s'installe sans votre accord.</p></div>
@@ -867,7 +873,7 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
         <figure><img src="assets/v2-feuilles.jpg" alt="Écran de correction d'une feuille de mesures" width="760" height="467" loading="lazy"><figcaption>Chaque atelier corrige ses feuilles : cotes, groupes, repères, adjonctions.</figcaption></figure>
         <figure><img src="assets/v2-soustraitance.jpg" alt="Bloc sous-traitance sur la fiche : sous-traitant, dates, ce qui est confié" width="760" height="394" loading="lazy"><figcaption>Fabrication sous-traitée : dates d'envoi et de retour, délai dépassé signalé.</figcaption></figure>
       </div>
-      <p class="v2-pied">Disponible en février 2027. Les ateliers déjà abonnés passent à la V2 à tarif avantageux.</p>
+      <p class="v2-pied">Disponible en février 2027. Les ateliers déjà abonnés passent à la V2 à tarif avantageux. Track-Op est une marque déposée de C-TER.</p>
     </div>
 
     <p class="section-sub reveal d2">Et celles de 2026, déjà en service :</p>
