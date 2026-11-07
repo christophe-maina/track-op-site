@@ -85,8 +85,19 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 img{max-width:100%;display:block;}
 
 /* ════ NAV ════ */
+.bandeau-v2{position:fixed;top:0;left:0;right:0;z-index:110;background:var(--jaune);color:#0b222d;
+  display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;
+  padding:9px 48px 9px 20px;font-size:14.5px;line-height:1.35;text-align:center}
+.bandeau-v2 b{font-family:var(--font-display);font-weight:800;letter-spacing:-.01em}
+.bandeau-v2 .pt{width:7px;height:7px;border-radius:50%;background:#0b222d;display:inline-block;animation:pulseDot 2s ease-in-out infinite;flex:0 0 7px}
+.bandeau-v2 a{color:#0b222d;font-weight:700;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.bandeau-v2 .fermer{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:0;color:#0b222d;font-size:19px;line-height:1;cursor:pointer;padding:4px 8px;opacity:.65}
+.bandeau-v2 .fermer:hover{opacity:1}
+body.sans-bandeau .bandeau-v2{display:none}
+body.sans-bandeau .nav{top:0}
+@media(max-width:700px){.bandeau-v2{font-size:13px;padding:8px 42px 8px 14px}}
 .nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
+  position:fixed;top:var(--h-bandeau,42px);left:0;right:0;z-index:100;
   padding:18px 32px;
   display:flex;align-items:center;justify-content:space-between;
   background:rgba(10,18,36,0.72);
@@ -592,7 +603,7 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
 @media(max-width:768px){
   .footer-inner{grid-template-columns:1fr;}
   .section{padding:80px 24px;}
-  .hero{padding:120px 24px 60px;}
+  .hero{padding:calc(120px + var(--h-bandeau,42px)) 24px 60px;}
   .promise{padding:100px 24px;}
 }
 
@@ -683,12 +694,19 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
     <a href="#video">Vidéo</a>
     <a href="#data">Vos données</a>
     <a href="#reference">Références</a>
-    <a href="#v2">V2 · février</a>
     <a href="#prereq">Prérequis</a>
   </div>
   <a href="#contact" class="nav-cta">Demander une démo →</a>
   <div class="nav-progress" id="navProgress"></div>
 </nav>
+
+<div class="bandeau-v2" id="bandeauV2">
+  <span class="pt" aria-hidden="true"></span>
+  <span><b>Version 2 · février 2027</b> — la feuille de mesures arrive sur la tablette, devant le patient.</span>
+  <a href="#v2">Voir ce qui arrive →</a>
+  <button class="fermer" type="button" aria-label="Masquer l'annonce" onclick="document.body.classList.add('sans-bandeau');try{localStorage.setItem('bandeauV2','off')}catch(e){}">×</button>
+</div>
+<script>try{if(localStorage.getItem('bandeauV2')==='off')document.body.classList.add('sans-bandeau')}catch(e){}</script>
 
 <!-- ════ HERO ════ -->
 <section class="hero">
@@ -831,7 +849,7 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
       Ce que l'atelier a demandé, <span class="accent">livré.</span>
     </h2>
     <p class="section-sub reveal d2">
-      Chaque évolution de Track-Op naît d'une demande de l'équipe d'Ortho Espace 3D, testée à l'atelier avant d'être livrée.
+      Chaque évolution de Track-Op naît d'une demande des ateliers qui s'en servent, éprouvée en production avant d'être livrée.
     </p>
 
     <div class="v2-bloc reveal">
@@ -1227,8 +1245,7 @@ footer{border-top:1px solid var(--line);padding:60px 32px 32px;background:var(--
       <a href="presentation/">Présentation complète</a>
       <a href="#how">Comment ça marche</a>
       <a href="#data">Vos données</a>
-      <a href="#v2">V2 · février</a>
-    <a href="#prereq">Prérequis</a>
+      <a href="#prereq">Prérequis</a>
     </div>
     <div class="footer-col">
       <h4>Contact</h4>
